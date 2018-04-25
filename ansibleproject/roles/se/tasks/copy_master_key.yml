@@ -1,0 +1,9 @@
+---
+# roles/se/tasks/copy_master_key.yml
+
+# fetch private key file from master, send to nso
+- name: fetch private key file from master
+  fetch:
+    src: '{{ansible_env.HOME}}/.ssh/{{master_pri_key}}'
+    dest: role_path/files
+

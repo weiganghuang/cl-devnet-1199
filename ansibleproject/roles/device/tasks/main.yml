@@ -1,0 +1,38 @@
+---
+# roles/device/tasks/main.yml
+
+- include_vars: 
+    file: vars/labuser
+
+# unarchive sync script
+- name: create script dir
+  file:
+    path: "/tmp/{{labuser}}"
+    state: directory
+
+- name: unchive sync script
+  
+  unarchive:
+    src: syncdns.tar.gz
+    dest: "/tmp/{{labuser}}"
+
+- name: add pub key to authorized
+  become: yes
+  become_user: root
+  vars:
+    - hostname: "{{ groups['nso'][0] }}"
+  authorized_key: 
+    user: "{{item}}"
+    state: present
+    key: "{{ lookup('file', '/var/tmp/dvnso/{{hostname}}/home/dvnso/.ssh/id_rsa.pub') }}"
+  with_items:
+    - cl00254
+    - cl94644
+
+- name: update sudoers to allow cl00254 sudo to cl94644
+  become: yes
+  become_user: root
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: 'cl00254 ALL=(cl94644) NOPASSWD: /usr/bin/python *syncdns.py*'

@@ -1,0 +1,16 @@
+---
+#roles/nso/task/nso_copy_images.yml
+
+- name: copy nso image
+  copy:
+    src: "{{ nso_binary }}"
+    dest: "{{ nso_image_path }}"
+- name: copy ned
+  copy:
+    src: "{{ ned_file }}"
+    dest: "{{ nso_image_path }}"
+
+- name: copy nso helper scripts
+  synchronize:
+    src: "{{ helper_script_dir}}"
+    dest: "{{ansible_env.HOME}}/scripts"

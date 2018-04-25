@@ -1,0 +1,35 @@
+---
+# roles/target/tasks/main.yml
+
+- name: add pub key of master to authorized_keys of targets
+  vars:
+    - hostname: "{{ groups['master'][0] }}"
+  authorized_key: 
+    user: "{{item}}"
+    state: present
+    key: "{{ lookup('file', '/var/tmp/dvnso/{{hostname}}/home/dvnso/.ssh/id_rsa.pub') }}"
+  with_items:
+    - cl94644
+
+- name: find backup sudoers file
+  find:
+    paths: /etc
+    patterns: "sudoers.*~"
+  register: files_to_delete
+
+- name: clean backup soduers
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ files_to_delete.files }}"
+
+- name: update sudoers to allow cl94644 sudo to dns for a set of commands
+  blockinfile:
+    path: /etc/sudoers
+    backup: yes
+    state: present
+    block: |
+      cl94644 ALL=(dns) NOPASSWD: /bin/mkdir *
+      cl94644 ALL=(dns) NOPASSWD: /bin/rm *
+
+

@@ -1,0 +1,17 @@
+---
+#roles/nso/tasks/nso_install.yml
+- name: clean up any previous old installation
+  file:
+    state: absent
+    path: "{{ nso_install_path }}/"
+
+- name: local install nso
+  shell: sh {{ nso_image_path}}/{{ nso_binary}} {{ nso_install_path}}
+- name: set nso
+  shell: source {{ nso_install_path}}/ncsrc; ncs-setup --dest {{ nso_run_dir}}
+
+- name: update .bashrc to source ncsrc
+  lineinfile:
+     dest: '{{ansible_env.HOME}}/.bashrc'
+     state: present
+     line: '. {{ nso_install_path }}/ncsrc'

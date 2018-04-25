@@ -1,0 +1,39 @@
+---
+# roles/nso/tasks/main.xml
+
+# copy nso image to nso host
+# copy ncs unix-bind ned to nso host
+# copy nso service model to nso host
+# copy nso device inventory to nso host
+- name: copy nso images, sm package, and device inventory
+  include: "nso_copy_images.yml"
+  tags: nso_copy_images
+
+# install nso
+- name: install nso
+  include: "nso_install.yml"
+  tags: nso_install
+
+# install ned and service packages
+- name: install ned and service packages
+  include: "nso_install_packages.yml"
+  tags: nso_install_package
+
+# start nso
+# reload package
+- name: start nso application
+  include: "nso_start.yml"
+  tags: nso_start.yml
+
+# load device inventory
+# sync device
+# 
+- name: add devices
+  include: "nso_add_devices.yml"
+  tags: nso_add_devices
+
+# postcheck nso
+- name: post chek nso
+  include: "nso_postcheck.yml"
+  tags: nso_postcheck
+
