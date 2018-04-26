@@ -2,7 +2,7 @@
 ## Hands on guide
 
 ****
-##Setup  
+## Setup  
 ![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/setup.png)    
 
 
