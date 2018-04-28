@@ -127,17 +127,17 @@ devivce  nso  se  target
      [nso\_add\_devices.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_add_devices.yml)
     
       
-  * nso_postcheck.yml.  In this play book, we pick two action to make sure the installation is sucessful, key exchange among N,M,T1,T2 allows necessary communication, and suders setting is proper.    
+   * nso_postcheck.yml.  In this play book, we pick two action to make sure the installation is sucessful, key exchange among N,M,T1,T2 allows necessary communication, and suders setting is proper.    
 
      Sample file:    
      [nso_postcheck.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_postcheck.yml)
      
-  * The above 7 tasks are putting together and invoked for role nso from playbook main.yml.    
+   * The above 7 tasks are putting together and invoked for role nso from playbook main.yml.    
     
      Sample file:  
      [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
     
-  * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. Template device.j2 file is the xml configuration files for creating auth group, and DNS master (M), and targets (T1, T2) to NSO's cdg.   
+   * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. Template device.j2 file is the xml configuration files for creating auth group, and DNS master (M), and targets (T1, T2) to NSO's cdg.   
       
       device.j2, xml format device config file with two variables.   
       Sample file:  
