@@ -233,7 +233,7 @@ targets
          - device
          - inventory
 
-      - name: load merge devices files
+      - name: load merge devices and inventory files
         shell: "source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs  --mergexmlfiles {{ansible_env.HOME}}/{{item}}.xml --cd {{ansible_env.HOME}}/ncs-run"
         with_items:
           - device
@@ -241,8 +241,30 @@ targets
 
       - name: sync device master
         shell: "source {{ nso_install_path}}/ncsrc; sh {{ansible_env.HOME}}/scripts/sync-device.sh master"
-       ```
+      ```
     * nso\_postcheck.yml:
+
+      ```
+      ---
+      #rules/nso/tasks/nso_add_devices.yml
+
+      - include_vars:
+          file: vars/labuser
+
+      - name: check device sync status
+        shell: "source {{ nso_install_path}}/ncsrc;sh {{ansible_env.HOME}}/scripts/check-sync.sh master"
+        register: syncoutput
+
+      - debug:
+          msg: "device sync result: {{syncoutput.stdout}}"
+
+      - name: test python scripts runs on master
+        shell: "source {{ nso_install_path}}/ncsrc; sh {{ansible_env.HOME}}/scripts/test-python-scripts.sh master {{labuser}}"
+        register: pythontestoutput
+      - debug:
+          msg: "python test: {{pythontestoutput.stdout}}"
+      ```
+
 
     
 
