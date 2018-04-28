@@ -87,24 +87,9 @@ devivce  nso  se  target
 3.  Create inventory file at `/home/dvans/home/ansibleproject`, name the file `hosts`. 
   * The contents of `hosts` file should contain the ip address of N, M, T1, and T2. 
   * Sample contents of `hosts`, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/home) 
+    
+    [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts)
   
-   ```
-[nso]
-172.23.123.212
-[master]
-172.23.123.227
-[target1]
-172.23.123.228
-[target2]
-172.23.123.229
-[targets:children]
-target1
-target2
-[all:children]
-nso
-master
-targets
-   ```
 4. Create tasks for role nso. List of tasks:
    * Copy images to NSO host.
    * Install NSO.
@@ -113,188 +98,58 @@ targets
    * Load devices
    * Post check.
    
-   All the above tasks are implemented to seperate playbooks.   
+   All the above tasks are implemented with seperate playbook yml files.   
    
-   * nso\_copy\_images.yml, uses ansible copy and synchroize modules. Varialbes such as nso\_binary, nso\_image\_path, and etc, are defined under group-vars, which will be covered in later steps. 
+   * nso\_copy\_images.yml. This task playbook uses ansible copy and synchroize modules. Varialbes such as nso\_binary, nso\_image\_path, and etc, are defined under group-vars, which will be covered in later steps.   
    
-     ```
-     ---
-     #roles/nso/task/nso_copy_images.yml
-
-     - name: copy nso image
-       copy:
-         src: "{{ nso_binary }}"
-         dest: "{{ nso_image_path }}"
-     - name: copy ned
-       copy:
-         src: "{{ ned_file }}"
-         dest: "{{ nso_image_path }}"
-
-     - name: copy nso helper scripts
-       synchronize:
-         src: "{{ helper_script_dir}}"
-         dest: "{{ansible_env.HOME}}/scripts"
-     ```
-    * nso\_install.yml. 
+     Sample file:    
+     [nso\_copy\_images.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso\_copy\_images.yml)
+   
+   * nso_install.yml. This tasks yml file defines play to install NSO and set nso environment.  
+     Sample file:  
+     [nso_install.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install.yml)
     
-      ```
-      ---
-      #roles/nso/tasks/nso_install.yml
+   * nso\_install\_packages.yml, this play book is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use block and looping.  
       
-      - name: clean up any previous old installation
-        file:
-          state: absent
-          path: "{{ nso_install_path }}/"
-
-      - name: local install nso
-      	 shell: sh {{ nso_image_path}}/{{ nso_binary}} {{ nso_install_path}}
-        
-      - name: set nso
-        shell: source {{ nso_install_path}}/ncsrc; ncs-setup --dest {{ nso_run_dir}}
-
-      - name: update .bashrc to source ncsrc
-        lineinfile:
-          dest: '{{ansible_env.HOME}}/.bashrc'
-          state: present
-          line: '. {{ nso_install_path }}/ncsrc'
-           
-       ```
-    * nso\_install\_packages.yml, this play book is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use block and looping:
+     Sample file:  
+     [nso\_install\_packages.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install_packages.yml)
     
-      ```
-      ---
-      #roles/nso/tasks/nso_install_packages.yml
+            
+   * nso_start.yml defines play to start NSO application.  
 
-      - name: clean packages directory
-        block:
-          - file:
-              path: "{{ nso_run_dir}}/packages"
-              state: absent
-
-          - file:
-              path: "{{ nso_run_dir}}/packages"
-              state: directory
-
-      - name: link unix bind ned
-        file:
-          path: "{{ nso_run_dir}}/packages/{{ ned_file }}"
-          src: "{{ nso_image_path }}/{{ ned_file }}"
-          state: "link"
-          mode: "0444"
-
-      - name: install service model packages
-        unarchive:
-          src: "{{ item }}"
-          dest: "{{ nso_run_dir}}/packages/"
-        with_items:
-          - "{{ dns_manager_pkg }}"
-          - "{{ inventory_pkg }}"
-      ```
+     Sample file:  
+     [nso_start.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_start.yml)
       
-    * nso\_start.yml:
       
-      ```
-      ---
-      #roles/nso/tasks/nso_start.yml
-
-      - name: stop nso
-        shell: "source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs --stop"
-        ignore_errors: yes
-
-      - name: start nso
-        shell: " source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs  --with-package-reload --cd {{ansible_env.HOME}}/ncs-run"
-        
-      ```
-      
-    * nso\_add\_devices.yml. This play book create devices and inventory to NSO. We use xml based config files to load merge to NSO's cdb. In this play book, we utlize template files for device and inventory xml files. The template files, device.j2 and inventory.j2 will be covered at later steps.
+   * nso\_add\_devices.yml. This play book create devices and inventory to NSO. We use xml based config files to load merge to NSO's cdb. In this play book, we utlize template files for device and inventory xml files. The template files, device.j2 and inventory.j2 will be covered at later steps.  
     
-      ```
-      ---
-      #rules/nso/tasks/nso_add_devices.yml
+     Sample file:  
+     [nso\_add\_devices.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_add_devices.yml)
+    
+      
+  * nso_postcheck.yml.  In this play book, we pick two action to make sure the installation is sucessful, key exchange among N,M,T1,T2 allows necessary communication, and suders setting is proper.    
 
-      - name: fetch master host key
-        shell: "ssh-keyscan -4 -T 5 -t rsa {{groups['master'][0]}} > /tmp/hostkey.txt"
-
-      - name: master hostkey
-        shell: ssh-keyscan -4 -T 5 -t rsa {{groups['master'][0]}}   2>/dev/null | awk '{ print $3; }' > /tmp/key.txt
-
-      - name: cat key
-        shell: cat /tmp/key.txt
-        register: catkey
-
-      - name: copy device xml and inventory xml files
-        vars:
-          host_key: "{{catkey.stdout}}"
-
-        template:
-          src: "{{ item }}.j2"
-          dest: '{{ansible_env.HOME}}/{{item}}.xml'
-        with_items:
-         - device
-         - inventory
-
-      - name: load merge devices and inventory files
-        shell: "source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs  --mergexmlfiles {{ansible_env.HOME}}/{{item}}.xml --cd {{ansible_env.HOME}}/ncs-run"
-        with_items:
-          - device
-          - inventory
-
-      - name: sync device master
-        shell: "source {{ nso_install_path}}/ncsrc; sh {{ansible_env.HOME}}/scripts/sync-device.sh master"
-      ```
-    * nso\_postcheck.yml:
-
-      ```
-      ---
-      #rules/nso/tasks/nso_add_devices.yml
-
-      - include_vars:
-          file: vars/labuser
-
-      - name: check device sync status
-        shell: "source {{ nso_install_path}}/ncsrc;sh {{ansible_env.HOME}}/scripts/check-sync.sh master"
-        register: syncoutput
-
-      - debug:
-          msg: "device sync result: {{syncoutput.stdout}}"
-
-      - name: test python scripts runs on master
-        shell: "source {{ nso_install_path}}/ncsrc; sh {{ansible_env.HOME}}/scripts/test-python-scripts.sh master {{labuser}}"
-        register: pythontestoutput
-      - debug:
-          msg: "python test: {{pythontestoutput.stdout}}"
-      ```
-    * The above 7 tasks are putting together and invoke for role nso by playbook main.yml:
-
-      ```
-      ---
-      # roles/nso/tasks/main.xml
-           
-      - name: copy nso images, sm package, and device inventory
-        include: "nso_copy_images.yml"
-        tags: nso_copy_images
-
-      - name: install nso
-        include: "nso_install.yml"
-        tags: nso_install
-
-      - name: install ned and service packages
-        include: "nso_install_packages.yml"
-        tags: nso_install_package
-
-      - name: start nso application
-        include: "nso_start.yml"
-        tags: nso_start.yml
-
-      - name: add devices
-        include: "nso_add_devices.yml"
-        tags: nso_add_devices
-
-      - name: post chek nso
-        include: "nso_postcheck.yml"
-        tags: nso_postcheck
-        
-      ```
+     Sample file:    
+     [nso_postcheck.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_postcheck.yml)
+     
+  * The above 7 tasks are putting together and invoked for role nso from playbook main.yml.    
+    
+     Sample file:  
+     [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
+    
+  * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. Template device.j2 file is the xml configuration files for creating auth group, and DNS master (M), and targets (T1, T2) to NSO's cdg.   
+      
+      device.j2, xml format device config file with two variables.   
+      Sample file:  
+      [device.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/device.j2) 
+    
+      inventory.j2, an xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
+      Sample file:
+      [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
+       
+5. Create 
+     
+      
 
 
     
