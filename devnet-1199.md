@@ -135,9 +135,9 @@ targets
          src: "{{ helper_script_dir}}"
          dest: "{{ansible_env.HOME}}/scripts"
      ```
-    * nso\_install.yml:
+    * nso\_install.yml. 
     
-     ```
+      ```
       ---
       #roles/nso/tasks/nso_install.yml
       
@@ -157,8 +157,99 @@ targets
           dest: '{{ansible_env.HOME}}/.bashrc'
           state: present
           line: '. {{ nso_install_path }}/ncsrc'
-          
+           
+       ```
+    * nso\_install\_packages.yml, this play book is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use block and looping:
+    
       ```
+      ---
+      #roles/nso/tasks/nso_install_packages.yml
+
+      - name: clean packages directory
+        block:
+          - file:
+              path: "{{ nso_run_dir}}/packages"
+              state: absent
+
+          - file:
+              path: "{{ nso_run_dir}}/packages"
+              state: directory
+
+      - name: link unix bind ned
+        file:
+          path: "{{ nso_run_dir}}/packages/{{ ned_file }}"
+          src: "{{ nso_image_path }}/{{ ned_file }}"
+          state: "link"
+          mode: "0444"
+
+      - name: install service model packages
+        unarchive:
+          src: "{{ item }}"
+          dest: "{{ nso_run_dir}}/packages/"
+        with_items:
+          - "{{ dns_manager_pkg }}"
+          - "{{ inventory_pkg }}"
+      ```
+      
+    * nso\_start.yml:
+      
+      ```
+      ---
+      #roles/nso/tasks/nso_start.yml
+
+      - name: stop nso
+        shell: "source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs --stop"
+        ignore_errors: yes
+
+      - name: start nso
+        shell: " source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs  --with-package-reload --cd {{ansible_env.HOME}}/ncs-run"
+        
+      ```
+      
+    * nso\_add\_devices.yml. This play book create devices and inventory to NSO. We use xml based config files to load merge to NSO's cdb. In this play book, we utlize template files for device and inventory xml files. The template files, device.j2 and inventory.j2 will be covered at later steps.
+    
+      ```
+      ---
+      #rules/nso/tasks/nso_add_devices.yml
+
+      - name: fetch master host key
+        shell: "ssh-keyscan -4 -T 5 -t rsa {{groups['master'][0]}} > /tmp/hostkey.txt"
+
+      - name: master hostkey
+        shell: ssh-keyscan -4 -T 5 -t rsa {{groups['master'][0]}}   2>/dev/null | awk '{ print $3; }' > /tmp/key.txt
+
+      - name: cat key
+        shell: cat /tmp/key.txt
+        register: catkey
+
+      - name: copy device xml and inventory xml files
+        vars:
+          host_key: "{{catkey.stdout}}"
+
+        template:
+          src: "{{ item }}.j2"
+          dest: '{{ansible_env.HOME}}/{{item}}.xml'
+        with_items:
+         - device
+         - inventory
+
+      - name: load merge devices files
+        shell: "source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs  --mergexmlfiles {{ansible_env.HOME}}/{{item}}.xml --cd {{ansible_env.HOME}}/ncs-run"
+        with_items:
+          - device
+          - inventory
+
+      - name: sync device master
+        shell: "source {{ nso_install_path}}/ncsrc; sh {{ansible_env.HOME}}/scripts/sync-device.sh master"
+       ```
+    * nso\_postcheck.yml:
+
+    
+
+
+
+
+      
 
 
 
