@@ -138,9 +138,21 @@ devivce  nso  se  target
       inventory.j2, an xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
       Sample file: [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
-5. Create tasks for role "device". 
+5. Create tasks for role "device". As mentioned in requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. The tasks for role "device" is to add rsa public key of N to M, for NSO's southbound user, and limit sudoers to perform the allowed operations. For this play, we define tasks in main.yml file.  
+
+   Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/device/tasks/main.yml)
    
-6. 
+   
+6. Create tasks for role "target". DNS master synchronize end user chosed directory to targets. To comply with the company's security requirements, the communication between master (M) to targets (T1,T2) is no-login, non-interaction, key based ssh. The tasks defined for this role is to add rsa public key to T1 and T2 for peer user, and limit sudoers to perform the allowed operations. Similar to that for "device", we define tasks in main.yml file. 
+  
+   Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
+
+7. Prepare image files for roles "nso" and "device"
+
+8. Create variables.
+9. Testing
+
+      
      
       
 
