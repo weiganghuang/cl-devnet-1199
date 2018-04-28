@@ -147,7 +147,9 @@ devivce  nso  se  target
       Sample file:
       [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
-5. Create 
+5. Create tasks for role device
+   
+6. 
      
       
 
