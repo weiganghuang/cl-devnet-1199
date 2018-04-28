@@ -115,7 +115,7 @@ targets
    
    All the above tasks are implemented to seperate playbooks.   
    
-   * nso\_copy_images.yml, uses ansible copy and synchroize modules. 
+   * nso\_copy\_images.yml, uses ansible copy and synchroize modules. Varialbes such as nso\_binary, nso\_image\_path, and etc, are defined under group-vars, which will be covered in later steps. 
    
      ```
      ---
@@ -135,8 +135,30 @@ targets
          src: "{{ helper_script_dir}}"
          dest: "{{ansible_env.HOME}}/scripts"
      ```
-    * nso install 
+    * nso\_install.yml:
+    
+     ```
+      ---
+      #roles/nso/tasks/nso_install.yml
+      
+      - name: clean up any previous old installation
+        file:
+          state: absent
+          path: "{{ nso_install_path }}/"
 
+      - name: local install nso
+      	 shell: sh {{ nso_image_path}}/{{ nso_binary}} {{ nso_install_path}}
+        
+      - name: set nso
+        shell: source {{ nso_install_path}}/ncsrc; ncs-setup --dest {{ nso_run_dir}}
+
+      - name: update .bashrc to source ncsrc
+        lineinfile:
+          dest: '{{ansible_env.HOME}}/.bashrc'
+          state: present
+          line: '. {{ nso_install_path }}/ncsrc'
+          
+      ```
 
 
 
