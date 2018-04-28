@@ -264,6 +264,37 @@ targets
       - debug:
           msg: "python test: {{pythontestoutput.stdout}}"
       ```
+    * The above 7 tasks are putting together and invoke for role nso by playbook main.yml:
+
+      ```
+      ---
+      # roles/nso/tasks/main.xml
+           
+      - name: copy nso images, sm package, and device inventory
+        include: "nso_copy_images.yml"
+        tags: nso_copy_images
+
+      - name: install nso
+        include: "nso_install.yml"
+        tags: nso_install
+
+      - name: install ned and service packages
+        include: "nso_install_packages.yml"
+        tags: nso_install_package
+
+      - name: start nso application
+        include: "nso_start.yml"
+        tags: nso_start.yml
+
+      - name: add devices
+        include: "nso_add_devices.yml"
+        tags: nso_add_devices
+
+      - name: post chek nso
+        include: "nso_postcheck.yml"
+        tags: nso_postcheck
+        
+      ```
 
 
     
