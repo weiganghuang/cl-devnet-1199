@@ -137,7 +137,7 @@ devivce  nso  se  target
      Sample file:  
      [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
     
-   * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. Template device.j2 file is the xml configuration files for creating auth group, and DNS master (M), and targets (T1, T2) to NSO's cdg.   
+   * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. device.j2 file for creating auth group, DNS master (M), and targets (T1, T2) to NSO's cdb.   
       
       device.j2, xml format device config file with two variables.   
       Sample file:  
