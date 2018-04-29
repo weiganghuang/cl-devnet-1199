@@ -164,6 +164,7 @@ devivce  nso  se  target
     [dvans@cl90 files]$ cp /var/tmp/dvans/inventory.tar.gz .
     [dvans@cl90 files]$ cp -r /var/tmp/dvans/scripts/ .
       ```
+      
     * Copy syncdns to device/files. From your ansible controller, copy the required file from /var/tmp/dvans/ to /home/dvans/ansibleproject/roles/device./files.   
   
         Sample output: 
