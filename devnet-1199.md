@@ -156,13 +156,14 @@ devivce  nso  se  target
     * Copy nso binary, ned, service package, and inventory package to nso/files. From your ansible controller, copy required files from /var/tmp/dvans to /home/dvans/ansibleproject/roles/nso/files.  
       
       Sample output:  
+      
       ```
       [dvans@cl90 ~]$ cd ansibleproject/roles/nso/files
-[dvans@cl90 files]$ cp /var/tmp/dvans/nso-4.5.0.1.linux.x86_64.installer.bin .
-[dvans@cl90 files]$ cp /var/tmp/dvans/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
-[dvans@cl90 files]$ cp /var/tmp/dvans/dns-manager.tar.gz .
-[dvans@cl90 files]$ cp /var/tmp/dvans/inventory.tar.gz .
-[dvans@cl90 files]$ cp -r /var/tmp/dvans/scripts/ .
+      [dvans@cl90 files]$ cp /var/tmp/dvans/nso-4.5.0.1.linux.x86_64.installer.bin .
+      [dvans@cl90 files]$ cp /var/tmp/dvans/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
+      [dvans@cl90 files]$ cp /var/tmp/dvans/dns-manager.tar.gz .
+      [dvans@cl90 files]$ cp /var/tmp/dvans/inventory.tar.gz .
+      [dvans@cl90 files]$ cp -r /var/tmp/dvans/scripts/ .
       ```
         
     * Copy syndns package to device/files. From your ansible controller, copy the required file from /var/tmp/dvans/ to /home/dvans/ansibleproject/roles/device/files/.   
