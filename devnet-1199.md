@@ -150,6 +150,10 @@ devivce  nso  se  target
 6. Create tasks for role "target". DNS master synchronize end user chosed directory to targets. To comply with the company's security requirements, the communication between master (M) to targets (T1,T2) is no-login, non-interaction, key based ssh. The tasks defined for this role is to add rsa public key to T1 and T2 for peer user, and limit sudoers to perform the allowed operations. Similar to that for "device", we define tasks in main.yml file. 
   
    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
+   
+11. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The feched publick key files can be then distributed to proper user's authorized keys files. We define the task in /home/dvnso/roles/se/tasks/main.yml file.  
+    
+    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
 7. Prepare image/helper scripts files for roles "nso" and "device". We will put required image/helper scripts files under files directory for each role. In this workshop, we only need to put files to role "nso" and "device". The required files are made available at /var/tmp/dvans for your ansible host, H.
 
@@ -175,9 +179,28 @@ devivce  nso  se  target
       [dvans@cl90 files]$ cp /var/tmp/dvans/syndns.tar.gz .
       ```
 8. Create variables.
-     * Create group variables. As shown at previous st
-9. Put everything together
-10. Testing
+     * Create group variables. As shown at the previous steps, the play books have utlize several variables. Role based variables are defined at group_vars directory.
+       * Variables for role "nso" is defined in file /home/dvans/ansibleproject/group_vars/nso.   
+         
+         Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
+         
+       * We also defined a variable to be used for install syncdns package. It is defined at /home/dvans/ansibleproject/vars. The sample file below shows the variable for lab user 16. Make sure you enter the value with your user name, such as user1, user2, and etc.  
+       
+         Sample file: [vars](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
+         
+9. Put everything together  
+   We have defined all play books for each role. Now we are ready to put everything together in file /home/dvans/ansibleproject/cl-playbook.yml. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in cl-playbook.yml.  
+     
+   Sample file: [cl-playbook.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/cl-playbook.yml)
+   
+10. Testing  
+    Now we are ready to test the top level play book cl-playbook.yml. To execute, we invoke ansible-playbook command `ansible-playbook -i hosts cl-playbook.yml`   
+    We expect it runs through successfully.   
+    Sample output:  
+    
+    
+    
+    
 
       
      
