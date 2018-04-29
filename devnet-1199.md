@@ -157,14 +157,14 @@ devivce  nso  se  target
       
       Sample output:  
         
-    * Copy syncdns to device/files. From your ansible controller, copy the required file from /var/tmp/dvans/ to /home/dvans/ansibleproject/roles/device./files.   
+    * Copy syncdns to device/files. From your ansible controller, copy the required file from /var/tmp/dvans/ to /home/dvans/ansibleproject/roles/device/files/.   
   
       Sample output: 
      
       ```
     [dvans@cl90 ~]$ cd ansibleproject/roles/device/files
     [dvans@cl90 files]$ cp /var/tmp/dvans/syndns.tar.gz .
-    ```
+      ```
 8. Create variables.
      * Create group variables. As shown at previous st
 9. Put everything together
