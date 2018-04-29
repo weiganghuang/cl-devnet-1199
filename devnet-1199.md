@@ -195,8 +195,9 @@ devivce  nso  se  target
    
 10. Testing  
     Now we are ready to test the top level play book cl-playbook.yml. To execute, we invoke ansible-playbook command `ansible-playbook -i hosts cl-playbook.yml`   
-    We expect it runs through successfully.   
-    Sample output:  
+    We expect it runs through successfully.  
+     
+    Sample output: [sample_output](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/sample_output/output)
     
     
     
