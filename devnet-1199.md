@@ -138,7 +138,11 @@ devivce  nso  se  target
       inventory.j2, an xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
       Sample file: [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
-5. Create tasks for role "device". As mentioned in requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. The tasks for role "device" is to add rsa public key of N to M, for NSO's southbound user, and limit sudoers to perform the allowed operations. For this play, we define tasks in main.yml file.  
+5. Create tasks for role "device". As mentioned in requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. The tasks for role "device" is to add rsa public key of N to M, for NSO's southbound user, and limit sudoers to perform the allowed operations.  
+  
+    The synchronization from master to targets is performed by a syncdns package from DNS master. Thus,we also need to define a task to install syncdns package onto dns master M.  
+     
+    For this play, we define tasks in main.yml file.  
 
    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/device/tasks/main.yml)
    
@@ -147,10 +151,31 @@ devivce  nso  se  target
   
    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
 
-7. Prepare image files for roles "nso" and "device"
-
+7. Prepare image/helper scripts files for roles "nso" and "device". We will put required image/helper scripts files under files directory for each role. In this workshop, we only need to put files to role "nso" and "device". The required files are made available at /var/tmp/dvans for your ansible host, H.
+  * Copy nso binary, ned, service package, and inventory package to nso/files. From your ansible controller, copy required files from /var/tmp/dvans to /home/dvans/ansibleproject/roles/nso/files.  
+  
+    Sample output:  
+  
+    ```
+    [dvans@cl90 ~]$ cd ansibleproject/roles/nso/files
+    [dvans@cl90 files]$ cp /var/tmp/dvans/nso-4.5.0.1.linux.x86_64.installer.bin .
+    [dvans@cl90 files]$ cp /var/tmp/dvans/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
+    [dvans@cl90 files]$ cp /var/tmp/dvans/dns-manager.tar.gz .
+    [dvans@cl90 files]$ cp /var/tmp/dvans/inventory.tar.gz .
+    [dvans@cl90 files]$ cp -r /var/tmp/dvans/scripts/ .
+    ```
+  * Copy syncdns to device/files. From your ansible controller, copy the required file from /var/tmp/dvans/ to /home/dvans/ansibleproject/roles/device./files.   
+  
+    Sample output: 
+     
+    ```
+    [dvans@cl90 ~]$ cd ansibleproject/roles/device/files
+    [dvans@cl90 files]$ cp /var/tmp/dvans/syndns.tar.gz .
+    ```
 8. Create variables.
-9. Testing
+   * Create group variables. As shown at previous st
+9. Put everything together
+10. Testing
 
       
      
