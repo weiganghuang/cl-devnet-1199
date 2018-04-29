@@ -1,0 +1,156 @@
+[dvans@cl90 ansibleproject]$ ansible-playbook -i hosts cl-playbook.yml 
+
+PLAY [nso,master,target1,target2] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [172.23.123.91]
+ok: [172.23.123.89]
+ok: [172.23.123.228]
+ok: [172.23.123.92]
+
+TASK [se : fetch public key files] *********************************************
+ok: [172.23.123.91] => (item=cl00254)
+ok: [172.23.123.89] => (item=cl00254)
+ok: [172.23.123.228] => (item=cl00254)
+ok: [172.23.123.92] => (item=cl00254)
+ok: [172.23.123.91] => (item=cl94644)
+ok: [172.23.123.89] => (item=cl94644)
+ok: [172.23.123.228] => (item=cl94644)
+ok: [172.23.123.91] => (item=dvnso)
+ok: [172.23.123.89] => (item=dvnso)
+ok: [172.23.123.228] => (item=dvnso)
+ok: [172.23.123.92] => (item=cl94644)
+ok: [172.23.123.92] => (item=dvnso)
+
+PLAY [master] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [172.23.123.91]
+
+TASK [device : include_vars] ***************************************************
+ok: [172.23.123.91]
+
+TASK [device : create script dir] **********************************************
+ok: [172.23.123.91]
+
+TASK [device : unchive sync script] ********************************************
+ok: [172.23.123.91]
+
+TASK [device : add pub key to authorized] **************************************
+ok: [172.23.123.91] => (item=cl00254)
+ok: [172.23.123.91] => (item=cl94644)
+
+TASK [device : update sudoers to allow cl00254 sudo to cl94644] ****************
+ok: [172.23.123.91]
+
+PLAY [target1,target2] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [172.23.123.228]
+ok: [172.23.123.92]
+
+TASK [target : add pub key of master to authorized_keys of targets] ************
+ok: [172.23.123.228] => (item=cl94644)
+ok: [172.23.123.92] => (item=cl94644)
+
+TASK [target : find backup sudoers file] ***************************************
+ok: [172.23.123.228]
+ok: [172.23.123.92]
+
+TASK [target : clean backup soduers] *******************************************
+
+TASK [target : update sudoers to allow cl94644 sudo to dns for a set of commands] ***
+ok: [172.23.123.228]
+ok: [172.23.123.92]
+
+PLAY [nso] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [172.23.123.89]
+
+TASK [nso : copy nso image] ****************************************************
+ok: [172.23.123.89]
+
+TASK [nso : copy ned] **********************************************************
+ok: [172.23.123.89]
+
+TASK [nso : copy nso helper scripts] *******************************************
+ok: [172.23.123.89]
+
+TASK [nso : clean up any previous old installation] ****************************
+changed: [172.23.123.89]
+
+TASK [nso : local install nso] *************************************************
+changed: [172.23.123.89]
+
+TASK [nso : set nso] ***********************************************************
+changed: [172.23.123.89]
+
+TASK [nso : update .bashrc to source ncsrc] ************************************
+ok: [172.23.123.89]
+
+TASK [nso : file] **************************************************************
+changed: [172.23.123.89]
+
+TASK [nso : file] **************************************************************
+changed: [172.23.123.89]
+
+TASK [nso : link unix bind ned] ************************************************
+changed: [172.23.123.89]
+
+TASK [nso : install service model packages] ************************************
+changed: [172.23.123.89] => (item=dns-manager.tar.gz)
+changed: [172.23.123.89] => (item=inventory.tar.gz)
+
+TASK [nso : stop nso] **********************************************************
+changed: [172.23.123.89]
+
+TASK [nso : start nso] *********************************************************
+changed: [172.23.123.89]
+
+TASK [nso : fetch master host key] *********************************************
+changed: [172.23.123.89]
+
+TASK [nso : master hostkey] ****************************************************
+changed: [172.23.123.89]
+
+TASK [nso : cat key] ***********************************************************
+changed: [172.23.123.89]
+
+TASK [nso : copy device xml and inventory xml files] ***************************
+ok: [172.23.123.89] => (item=device)
+ok: [172.23.123.89] => (item=inventory)
+
+TASK [nso : load merge devices files] ******************************************
+changed: [172.23.123.89] => (item=device)
+changed: [172.23.123.89] => (item=inventory)
+
+TASK [nso : sync device master] ************************************************
+changed: [172.23.123.89]
+
+TASK [nso : include_vars] ******************************************************
+ok: [172.23.123.89]
+
+TASK [nso : check device sync status] ******************************************
+changed: [172.23.123.89]
+
+TASK [nso : debug] *************************************************************
+ok: [172.23.123.89] => {
+    "msg": "device sync result: check sync status of device  master\r\nresult in-sync"
+}
+
+TASK [nso : test python scripts runs on master] ********************************
+changed: [172.23.123.89]
+
+TASK [nso : debug] *************************************************************
+ok: [172.23.123.89] => {
+    "msg": "python test: check sync status of device  master\r\nresult \nSTDOUT : Usage: syncdns.py [options] arg\nOptions:\n  --version             show program's version number and exit\n  -h, --help            show this help message and exit\n  -s HOSTS, --servers=HOSTS\n                        destination apn server list\n  -b BACKUP_DIR, --backup_directory=BACKUP_DIR\n                        backup directory\n  -d DNS_BASE, --dns_base=DNS_BASE\n                        dns sync base directory\n  -t OPERATION, --oper_type=OPERATION\n                        operation type, commit or rollback\n  -e EXCLUDE_FILES, --exclude_files=EXCLUDE_FILES\n                        excluded files\n  -i IXC_FILES, --include_files=IXC_FILES\n                        include files, applies to ixc targets\n  -l SYMBOLIC_LINK, --symbolic_link=SYMBOLIC_LINK\n                        symbolic link excluded?\n  -n MAX_VERSION, --max_versions=MAX_VERSION\n                        maximum versions of backup kept\n  -m MAX_SIZE, --max_size=MAX_SIZE\n                        maximum backup disk size (MB)\n  -T TIMEOUT, --exec_timeout=TIMEOUT\n                        script execution timeout (seconds)\n  -a ACCOUNT, --user_accounts=ACCOUNT\n                        user accounts for forced commands\n  -f FN_DNS_BASE, --fn_dns_base=FN_DNS_BASE\n                        first net dns sync base directory\n  -g FN_EXCLUDE_FILES, --fn_exclude_files=FN_EXCLUDE_FILES\n                        first net exclude files\n  -j FN_SYMBOLIC_LINK, --fn_symbolic_link=FN_SYMBOLIC_LINK\n                        first net, symbolic link excluded?\n  -k LOG_LEVEL, --log_level=LOG_LEVEL\n                        log level\n  -o LOCAL_OS, --local_os=LOCAL_OS\n                        master os, SunOS or Linux\n  -r FN_DEST_BASE_DIR, --fn_dest_base_dir=FN_DEST_BASE_DIR\n                        first net dns sync destination base directory"
+}
+
+PLAY RECAP *********************************************************************
+172.23.123.228             : ok=6    changed=0    unreachable=0    failed=0   
+172.23.123.89              : ok=27   changed=16   unreachable=0    failed=0   
+172.23.123.91              : ok=8    changed=0    unreachable=0    failed=0   
+172.23.123.92              : ok=6    changed=0    unreachable=0    failed=0   
+
+
