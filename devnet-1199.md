@@ -21,17 +21,18 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
   * DNS master managed by NSO. NSO end users can pick and choose the DNS configration portion to synchronize to targets.
 
 * DNS targets T1 and T2:
-  * DNS targets in the network. 
+  * DNS targets in the network
 
 ### Requirements
 
-* Use Cisco NSO manage DNS servers, perform synchronize operations from master to targets.
+* Use Cisco NSO manage DNS servers, invoke an action of synchronize operations from master to targets.
 * Install Cisco NSO and service packages, device inventory on host N. NSO host manages DNS hosts, M, T1, and T2.
-* To meet security compliance, the communicataion between NSO to hosts it manages (M, T1 and T2) is limited to no-login, key based ssh.
-* To meet security copliance, the transport among DNS hosts is limited to non-interactive, no-login, key based. 
+* To meet security compliance, the communication between NSO to hosts it manages (M, T1 and T2) is limited to no-login, key based ssh.
+* To meet security compliance, the transport among DNS hosts is limited to non-interactive, no-login, key based. 
 * Users:
   * dvnso: owns and runs NSO
   * cl00254: device (DNS servers) 
+  * cl94644: performs synchronization from master to targets
 
 ### Ansible Playbook Design
 
