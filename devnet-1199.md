@@ -62,30 +62,40 @@ Lab access steps:
 
 ### Create Ansible playbook diretories
 
+1. A set of directories and files are pre-defined on each ansible controller vm. 
+
+   * check home directory, expect to see ansibleproject, hosts, and roles are created. 
+   
+   * Sample output:
+
+     ```
+     [dvans@cl-lab-212 ~]$ ls
+     ansibleproject      ncs-4.5.0.1-unix- bind-2.0.0.tar.gz      solution
+     dns-manager.tar.gz nso-4.5.0.1.linux.x86_64.installer.bin
+inventory.tar.gz    scripts
+     [dvans@cl-lab-212 ~]$ ls ansibleproject/
+group_vars hosts  roles  vars
+
+     ```
+   
 1. Create roles using ansible-galaxy. "ansible-galaxy init" creates directories roles skeleton directories.  
    * Sample output:    
 
      ```
-     [dvans@cl90 ~]$ mkdir ansibleproject 
-     [dvans@cl90 ~]$ cd ansibleproject
-     [dvans@cl90 ansibleproject]$ mkdir roles
-     [dvans@cl90 ansibleproject]$ cd role
+     [dvans@cl90 ~]$ cd ansibleproject/roles
      [dvans@cl90 roles]$ ansible-galaxy init se
      - se was created successfully
      [dvans@cl90 roles]$ ansible-galaxy init nso
      - nso was created successfully
-     [dvans@cl90 roles]$ ansible-galaxy init devivce  
-     - devivce was created successfully  
+     [dvans@cl90 roles]$ ansible-galaxy init device  
+     - device was created successfully  
      [dvans@cl90 roles]$ ansible-galaxy init target  
      - target was created successfully  
      [dvans@cl90 roles]$ ls  
-     devivce  nso  se  target
+     device  nso  se  target
      ```
-
-2.  Create group_vars directory  
-    `[dvans@cl90 ansibleproject]$ mkdir group_vars`
   
-3.  Create inventory file /home/dvans/home/ansibleproject/hosts.  
+3.  View inventory file /home/dvans/home/ansibleproject/hosts.  
     The contents of hosts file should contain the ip address of N, M, T1, and T2.   
     Sample contents of hosts, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=794506e345394e7daa069aeb2c931a1c) 
     
