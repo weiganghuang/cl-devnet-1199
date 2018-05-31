@@ -76,7 +76,7 @@ Lab access steps:
      group_vars hosts  roles  vars
      ```
    
-1. Create roles using ansible-galaxy. "ansible-galaxy init" creates directories roles skeleton directories.  
+1. Create roles using ansible-galaxy. `ansible-galaxy init` creates directories roles skeleton directories.  
    * Sample output:    
 
      ```
@@ -93,7 +93,7 @@ Lab access steps:
      device  nso  se  target
      ```
   
-3.  View inventory file /home/dvans/home/ansibleproject/hosts.  
+3.  View inventory file `/home/dvans/home/ansibleproject/hosts`.  
     The contents of hosts file should contain the ip address of N, M, T1, and T2.   
     Sample contents of hosts, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=794506e345394e7daa069aeb2c931a1c) 
     
@@ -111,33 +111,33 @@ Lab access steps:
    
    **Note, the nso task yml files should be at directory `/home/dvans/home/ansibleproject/roles/nso/tasks/`.**   
    
-   * nso\_copy\_images.yml. This task playbook uses ansible copy and synchroize modules. Varialbes such as nso\_binary, nso\_image\_path, and etc, are defined under group-vars, which will be covered in later steps.   
+   * `nso_copy_images.yml` This yml file uses ansible copy and synchroize modules. Varialbes such as nso\_binary, nso\_image\_path, and etc, are defined under `group_vars/nso`, which will be covered in later steps.   
    
      Sample file: [nso\_copy\_images.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso\_copy\_images.yml)
    
-   * nso_install.yml. This tasks yml file defines play to install NSO and set nso environment.  
+   * `nso_install.yml` This yml file defines play to install NSO and set nso environment.  
      Sample file: [nso_install.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install.yml)
     
-   * nso\_install\_packages.yml, this play book is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use block and looping.  
+   * `nso_install_packages.yml`, this yml file is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use block and looping.  
       
      Sample file: [nso\_install\_packages.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install_packages.yml)
     
             
-   * nso_start.yml defines play to start NSO application.  
+   * `nso_start.yml` defines a play to start NSO application.  
 
      Sample file: [nso_start.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_start.yml)
       
       
-   * nso\_add\_devices.yml. This play book create devices and inventory to NSO. We use xml based config files to load merge to NSO's cdb. In this play book, we utlize template files for device and inventory xml files. The template files, device.j2 and inventory.j2 will be covered at later steps.  
+   * `nso_add_devices.yml`. This yml file creates devices and nso inventory for NSO. We use xml based config files to load merge to NSO's cdb. In this play book, we utlize template files for device and inventory xml files. The template files, device.j2 and inventory.j2 will be covered at later steps.  
     
      Sample file: [nso\_add\_devices.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_add_devices.yml)
     
       
-   * nso_postcheck.yml.  In this play book, we pick two action to make sure the installation is sucessful, key exchange among N,M,T1,T2 allows necessary communication, and suders setting is proper.    
+   * `nso_postcheck.yml`.  In this play book, we pick two actions to make sure the installation is sucessful, rsa keys exchanged among N,M,T1,T2 to allow required communication, and suders is set properly.    
 
      Sample file: [nso_postcheck.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_postcheck.yml)
      
-   * The above 7 tasks are putting together and invoked for role nso from playbook main.yml.    
+   * The above 7 tasks are putting together and invoked for role nso from playbook `main.yml`.    
     
      Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
     
