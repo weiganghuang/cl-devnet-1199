@@ -71,10 +71,9 @@ Lab access steps:
      ```
      [dvans@cl-lab-212 ~]$ ls
      ansibleproject      ncs-4.5.0.1-unix- bind-2.0.0.tar.gz      solution
-     dns-manager.tar.gz nso-4.5.0.1.linux.x86_64.installer.bin
-inventory.tar.gz    scripts
+     dns-manager.tar.gz nso-4.5.0.1.linux.x86_64.installer.bin		  inventory.tar.gz    scripts
      [dvans@cl-lab-212 ~]$ ls ansibleproject/
-group_vars hosts  roles  vars
+	   group_vars hosts  roles  vars
      ```
    
 1. Create roles using ansible-galaxy. "ansible-galaxy init" creates directories roles skeleton directories.  
