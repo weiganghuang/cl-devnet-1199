@@ -107,7 +107,9 @@ Lab access steps:
    * Load devices
    * Post check.
    
-   All the above tasks are implemented with seperate playbook yml files.   
+   All the above nso tasks are implemented with seperate playbook yml files. 
+   
+   **Note, the nso task yml files should be at directory `/home/dvans/home/ansibleproject/roles/nso/tasks/`.**   
    
    * nso\_copy\_images.yml. This task playbook uses ansible copy and synchroize modules. Varialbes such as nso\_binary, nso\_image\_path, and etc, are defined under group-vars, which will be covered in later steps.   
    
