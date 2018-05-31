@@ -72,7 +72,7 @@ Lab access steps:
      [dvans@cl90 ansibleproject]$ cd role
      [dvans@cl90 roles]$ ansible-galaxy init se
      - se was created successfully
-     [dvans@cl90 roles]$ ansible-galaxy init ns
+     [dvans@cl90 roles]$ ansible-galaxy init nso
      - nso was created successfully
      [dvans@cl90 roles]$ ansible-galaxy init devivce  
      - devivce was created successfully  
