@@ -75,7 +75,6 @@ Lab access steps:
 inventory.tar.gz    scripts
      [dvans@cl-lab-212 ~]$ ls ansibleproject/
 group_vars hosts  roles  vars
-
      ```
    
 1. Create roles using ansible-galaxy. "ansible-galaxy init" creates directories roles skeleton directories.  
