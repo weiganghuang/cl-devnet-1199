@@ -128,24 +128,24 @@ Lab access steps:
      Sample file: [nso_start.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_start.yml)
       
       
-   * `nso_add_devices.yml`. This yml file creates devices and nso inventory for NSO. We use xml based config files to load merge to NSO's cdb. In this play book, we utlize template files for device and inventory xml files. The template files, device.j2 and inventory.j2 will be covered at later steps.  
+   * `nso_add_devices.yml`. This yml file creates devices and service inventory instances for NSO. We use xml based config files to load merge to NSO's cdb. In this play book, we use templates. The template files, `device.j2` and `inventory.j2` are covered at later steps.  
     
      Sample file: [nso\_add\_devices.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_add_devices.yml)
     
       
-   * `nso_postcheck.yml`.  In this play book, we pick two actions to make sure the installation is sucessful, rsa keys exchanged among N,M,T1,T2 to allow required communication, and suders is set properly.    
+   * `nso_postcheck.yml`.  In this play book, we pick two actions to make sure the installation is sucessful, rsa keys are exchanged among N,M,T1,T2 to allow required secure communication, and sudoers are set properly.    
 
      Sample file: [nso_postcheck.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_postcheck.yml)
      
-   * The above 7 tasks are putting together and invoked for role nso from playbook `main.yml`.    
+   * The above 7 tasks are putting together and invoked from playbook `main.yml`.    
     
      Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
 
 5. Create template files for role "nso"
    
-   Templates are used to create device instances and inventory instances in NSO in `nso_add_devices.yml'.  Template files are defined under template directory of each role, in this case, role nso. 
+   Templates are used to create device instances and inventory instances in NSO in `nso_add_devices.yml'.  
    
-   **Note, below two template files, `device.j2` and `inventory.j2` should be created at `/home/dvans/ansibleproject/roles/device/templates/` directory.**
+   **Note, below two template files, `device.j2` and `inventory.j2` should be created at `/home/dvans/ansibleproject/roles/nso/templates/` directory.**
    
       
     * `device.j2`, the xml format device config file with two variables. 
@@ -153,6 +153,7 @@ Lab access steps:
       Sample file: [device.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/device.j2) 
     
     * `inventory.j2`, the xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
+
       Sample file: [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
 5. Create tasks for role "device". As mentioned in requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. The tasks for role "device" is to add rsa public key of N to M, for NSO's southbound user, and limit sudoers to perform the allowed operations.  
@@ -168,11 +169,13 @@ Lab access steps:
   
    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
    
-11. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The feched publick key files can be then distributed to proper user's authorized keys files. We define the task in `/home/dvans/roles/se/tasks/main.yml`.  
+11. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The feched publick key files can be then distributed to proper user's authorized keys files. We define the task in `/home/dvans/ansibleproject/roles/se/tasks/main.yml`.  
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
-7. Prepare image/helper scripts files for roles "nso" and "device". We put the required image/helper scripts files under `files` directory for each role. In this workshop, we only need to put files to roles "nso" and "device". The required files are made available at `/home/dvans` for your ansible host, H.
+7. Prepare image/helper scripts files for roles "nso" and "device". The required images and helper scripts files are created under `files` directory for each role. In this workshop, we only need to put files to roles "nso" and "device". 
+
+    The required files are made available at `/home/dvans` for your ansible host, H.
 
     * Copy nso binary, ned, service package, and inventory package to nso/files. From your ansible controller, copy required files from `/home/dvans/` to `/home/dvans/ansibleproject/roles/nso/files`.  
       
