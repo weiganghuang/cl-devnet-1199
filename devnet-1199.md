@@ -194,7 +194,7 @@ Lab access steps:
   
       Sample output: 
      
-      ```shell
+      ```
       [dvans@cl90 ~]$ cd ~/ansibleproject/roles/device/files
       [dvans@cl90 files]$ cp ~/syncdns.tar.gz .
       ```
