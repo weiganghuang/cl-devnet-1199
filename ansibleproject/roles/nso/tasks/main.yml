@@ -1,10 +1,6 @@
 ---
 # roles/nso/tasks/main.xml
 
-# copy nso image to nso host
-# copy ncs unix-bind ned to nso host
-# copy nso service model to nso host
-# copy nso device inventory to nso host
 - name: copy nso images, sm package, and device inventory
   include: "nso_copy_images.yml"
   tags: nso_copy_images

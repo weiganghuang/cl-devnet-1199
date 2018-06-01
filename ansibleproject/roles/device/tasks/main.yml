@@ -4,14 +4,12 @@
 - include_vars: 
     file: vars/labuser
 
-# unarchive sync script
 - name: create script dir
   file:
     path: "/tmp/{{labuser}}"
     state: directory
 
-- name: unchive sync script
-  
+- name: unchive sync script  
   unarchive:
     src: syncdns.tar.gz
     dest: "/tmp/{{labuser}}"
@@ -29,7 +27,7 @@
     - cl00254
     - cl94644
 
-- name: update sudoers to allow cl00254 sudo to cl94644
+- name: update sudoers to allow cl00254 sudo to cl94644, invoke syncdns script
   become: yes
   become_user: root
   lineinfile:
