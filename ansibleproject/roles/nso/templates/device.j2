@@ -19,20 +19,15 @@
         </default-map>
       </group>
     </authgroups>
-    <mib-group>
-      <name>snmp</name>
-      <mib-module>SNMP*</mib-module>
-    </mib-group>
     <device>
       <name>master</name>
       <address>{{ master_ip }}</address>
       <ssh>
-      <host-key>
-        <algorithm>ssh-rsa</algorithm>
-        <key-data>{{ host_key }}</key-data>
-      </host-key>
-    </ssh>
-
+        <host-key>
+          <algorithm>ssh-rsa</algorithm>
+          <key-data>{{ host_key }}</key-data>
+        </host-key>
+      </ssh>
       <description>TGT: APN app+sudo Linux</description>
       <authgroup>dnsmaster</authgroup>
       <port>22</port>
