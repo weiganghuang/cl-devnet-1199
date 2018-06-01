@@ -94,10 +94,14 @@ Lab access steps:
      ```
   
 3.  View inventory file `/home/dvans/home/ansibleproject/hosts`.  
-    The contents of hosts file should contain the ip address of N, M, T1, and T2.   
-    Sample contents of hosts, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=794506e345394e7daa069aeb2c931a1c) 
+
+    The contents of hosts file should contain the ip address of N, M, T1, and T2.  
+     
+    Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
     
-    [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts)
+    Check the pre-populated hosts file, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=794506e345394e7daa069aeb2c931a1c) 
+    
+    
   
 4. Create tasks for role "nso". List of tasks:
    * Copy images to NSO host.
