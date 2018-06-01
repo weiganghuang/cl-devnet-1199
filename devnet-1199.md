@@ -140,29 +140,35 @@ Lab access steps:
    * The above 7 tasks are putting together and invoked for role nso from playbook `main.yml`.    
     
      Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
-    
-   * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. device.j2 file for creating the auth group for NSO sync up with DNS master (M), and device instances for DNS servers (M, T1 and T2).   
+
+5. Create template files for role "nso"
+   
+   Templates are used to create device instances and inventory instances in NSO in `nso_add_devices.yml'.  Template files are defined under template directory of each role, in this case, role nso. 
+   
+   **Note, below two template files, `device.j2` and `inventory.j2` should be created at `/home/dvans/ansibleproject/roles/device/templates/` directory.**
+   
       
-      `device.j2`, the xml format device config file with two variables.   
+    * `device.j2`, the xml format device config file with two variables. 
+        
       Sample file: [device.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/device.j2) 
     
-      `inventory.j2`, the xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
+    * `inventory.j2`, the xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
       Sample file: [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
 5. Create tasks for role "device". As mentioned in requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. The tasks for role "device" is to add rsa public key of N to M, for NSO's southbound user, and limit sudoers to perform the allowed operations.  
   
     The synchronization from master to targets is performed by a syncdns package from DNS master. Thus,we also need to define a task to install syncdns package onto dns master M.  
      
-    For this play, we define tasks in main.yml file.  
+    For this play, we define tasks in `/home/dvans/ansibleproject/roles/device/tasks/main.yml`.  
 
    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/device/tasks/main.yml)
    
    
-6. Create tasks for role "target". DNS master synchronize end user chosed directory to targets. To comply with the company's security requirements, the communication between master (M) to targets (T1,T2) is no-login, non-interaction, key based ssh. The tasks defined for this role is to add rsa public key to T1 and T2 for peer user, and limit sudoers to perform the allowed operations. Similar to that for "device", we define tasks in main.yml file. 
+6. Create tasks for role "target". DNS master synchronize end user chosed directory to targets. To comply with the company's security requirements, the communication between master (M) to targets (T1,T2) is no-login, non-interaction, key based ssh. The tasks defined for this role is to add rsa public key to T1 and T2 for peer user, and limit sudoers to perform the allowed operations. Similar to that for "device", we define tasks in `/home/dvans/ansibleproject/roles/target/tasks/main.yml`. 
   
    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
    
-11. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The feched publick key files can be then distributed to proper user's authorized keys files. We define the task in /home/dvnso/roles/se/tasks/main.yml file.  
+11. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The feched publick key files can be then distributed to proper user's authorized keys files. We define the task in `/home/dvans/roles/se/tasks/main.yml`.  
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
@@ -181,7 +187,7 @@ Lab access steps:
       [dvans@cl90 files]$ cp -r ~/scripts/ .
       ```
         
-    * Copy syndns package to `device/files`. From your ansible controller, copy the required file from `/homedvans/` to `/home/dvans/ansibleproject/roles/device/files/`.   
+    * Copy syndns package to `device/files`. From your ansible controller, copy the required file from `/home/dvans/` to `/home/dvans/ansibleproject/roles/device/files/`.   
   
       Sample output: 
      
