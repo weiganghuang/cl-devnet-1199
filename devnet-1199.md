@@ -152,7 +152,7 @@ Lab access steps:
         
       Sample file: [device.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/device.j2) 
     
-    * `inventory.j2`, the xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
+    * `inventory.j2`, the xml format inventory template file to create inventory model in NSO's cdb. There is no veriable in this template.  
 
       Sample file: [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
@@ -169,7 +169,7 @@ Lab access steps:
   
    Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
    
-11. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The feched publick key files can be then distributed to proper user's authorized keys files. We define the task in `/home/dvans/ansibleproject/roles/se/tasks/main.yml`.  
+11. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The fetched publick key files are then distributed to proper user's authorized keys files. We define the task in `/home/dvans/ansibleproject/roles/se/tasks/main.yml`.  
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
@@ -200,7 +200,7 @@ Lab access steps:
       ```
 8. Create variables.
      * Create group variables. As shown at the previous steps, the play books have used several variables. Role based variables are defined at `group_vars` directory.
-       * Variables for role "nso" is defined in file `/home/dvans/ansibleproject/group_vars/nso`.   
+       * Variables for role "nso" is defined in `/home/dvans/ansibleproject/group_vars/nso`.   
          
          Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
          
@@ -209,7 +209,7 @@ Lab access steps:
          Sample file: [vars](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
          
 9. Put everything together  
-   We have defined all play books for each role. Now we are ready to put everything together in file `/home/dvans/ansibleproject/cl-playbook.yml`. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in `cl-playbook.yml`.  
+   We have defined all play books for each role. Now we are ready to put everything together in `/home/dvans/ansibleproject/cl-playbook.yml`. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in `cl-playbook.yml`.  
      
    Sample file: [cl-playbook.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/cl-playbook.yml)
    
