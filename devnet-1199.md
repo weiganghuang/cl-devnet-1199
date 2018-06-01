@@ -141,12 +141,12 @@ Lab access steps:
     
      Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
     
-   * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. device.j2 file for creating auth group, DNS master (M), and targets (T1, T2) to NSO's cdb.   
+   * We have used a couple of variables and templates in the tasks of nso. Template files are defined under template directory of each role. device.j2 file for creating the auth group for NSO sync up with DNS master (M), and device instances for DNS servers (M, T1 and T2).   
       
-      device.j2, xml format device config file with two variables.   
+      `device.j2`, the xml format device config file with two variables.   
       Sample file: [device.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/device.j2) 
     
-      inventory.j2, an xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
+      `inventory.j2`, the xml format inventory template file to create inventory model in NSO's cdb. There is no veriables in this template.  
       Sample file: [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
 5. Create tasks for role "device". As mentioned in requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. The tasks for role "device" is to add rsa public key of N to M, for NSO's southbound user, and limit sudoers to perform the allowed operations.  
@@ -166,41 +166,41 @@ Lab access steps:
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
-7. Prepare image/helper scripts files for roles "nso" and "device". We will put required image/helper scripts files under files directory for each role. In this workshop, we only need to put files to role "nso" and "device". The required files are made available at /var/tmp/dvans for your ansible host, H.
+7. Prepare image/helper scripts files for roles "nso" and "device". We will put required image/helper scripts files under files directory for each role. In this workshop, we only need to put files to roles "nso" and "device". The required files are made available at `/home/dvans` for your ansible host, H.
 
-    * Copy nso binary, ned, service package, and inventory package to nso/files. From your ansible controller, copy required files from /var/tmp/dvans to /home/dvans/ansibleproject/roles/nso/files.  
+    * Copy nso binary, ned, service package, and inventory package to nso/files. From your ansible controller, copy required files from `/home/dvans/` to `/home/dvans/ansibleproject/roles/nso/files`.  
       
       Sample output:  
       
       ```
       [dvans@cl90 ~]$ cd ansibleproject/roles/nso/files
-      [dvans@cl90 files]$ cp /var/tmp/dvans/nso-4.5.0.1.linux.x86_64.installer.bin .
-      [dvans@cl90 files]$ cp /var/tmp/dvans/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
-      [dvans@cl90 files]$ cp /var/tmp/dvans/dns-manager.tar.gz .
-      [dvans@cl90 files]$ cp /var/tmp/dvans/inventory.tar.gz .
-      [dvans@cl90 files]$ cp -r /var/tmp/dvans/scripts/ .
+      [dvans@cl90 files]$ cp ~/nso-4.5.0.1.linux.x86_64.installer.bin .
+      [dvans@cl90 files]$ cp ~/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
+      [dvans@cl90 files]$ cp ~/dns-manager.tar.gz .
+      [dvans@cl90 files]$ cp ~/inventory.tar.gz .
+      [dvans@cl90 files]$ cp -r ~/scripts/ .
       ```
         
-    * Copy syndns package to device/files. From your ansible controller, copy the required file from /var/tmp/dvans/ to /home/dvans/ansibleproject/roles/device/files/.   
+    * Copy syndns package to `device/files`. From your ansible controller, copy the required file from `/homedvans/` to `/home/dvans/ansibleproject/roles/device/files/`.   
   
       Sample output: 
      
       ```shell
       [dvans@cl90 ~]$ cd ansibleproject/roles/device/files
-      [dvans@cl90 files]$ cp /var/tmp/dvans/syndns.tar.gz .
+      [dvans@cl90 files]$ cp ~/syndns.tar.gz .
       ```
 8. Create variables.
-     * Create group variables. As shown at the previous steps, the play books have utlize several variables. Role based variables are defined at group_vars directory.
-       * Variables for role "nso" is defined in file /home/dvans/ansibleproject/group_vars/nso.   
+     * Create group variables. As shown at the previous steps, the play books have utlize several variables. Role based variables are defined at `group_vars` directory.
+       * Variables for role "nso" is defined in file `/home/dvans/ansibleproject/group_vars/nso`.   
          
          Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
          
-       * We also defined a variable to be used for install syncdns package. It is defined at /home/dvans/ansibleproject/vars. The sample file below shows the variable for lab user 16. Make sure you enter the value with your user name, such as user1, user2, and etc.  
+       * We also defined a variable to be used for install syncdns package. It is defined at `/home/dvans/ansibleproject/vars`. The sample file below shows the variable for lab user 16. Make sure you enter the value with your user name, such as user1, user2, and etc.  
        
          Sample file: [vars](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
          
 9. Put everything together  
-   We have defined all play books for each role. Now we are ready to put everything together in file /home/dvans/ansibleproject/cl-playbook.yml. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in cl-playbook.yml.  
+   We have defined all play books for each role. Now we are ready to put everything together in file `/home/dvans/ansibleproject/cl-playbook.yml`. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in `cl-playbook.yml`.  
      
    Sample file: [cl-playbook.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/cl-playbook.yml)
    
