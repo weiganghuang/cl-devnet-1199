@@ -172,7 +172,7 @@ Lab access steps:
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
-7. Prepare image/helper scripts files for roles "nso" and "device". We will put required image/helper scripts files under files directory for each role. In this workshop, we only need to put files to roles "nso" and "device". The required files are made available at `/home/dvans` for your ansible host, H.
+7. Prepare image/helper scripts files for roles "nso" and "device". We put the required image/helper scripts files under `files` directory for each role. In this workshop, we only need to put files to roles "nso" and "device". The required files are made available at `/home/dvans` for your ansible host, H.
 
     * Copy nso binary, ned, service package, and inventory package to nso/files. From your ansible controller, copy required files from `/home/dvans/` to `/home/dvans/ansibleproject/roles/nso/files`.  
       
@@ -196,7 +196,7 @@ Lab access steps:
       [dvans@cl90 files]$ cp ~/syndns.tar.gz .
       ```
 8. Create variables.
-     * Create group variables. As shown at the previous steps, the play books have utlize several variables. Role based variables are defined at `group_vars` directory.
+     * Create group variables. As shown at the previous steps, the play books have used several variables. Role based variables are defined at `group_vars` directory.
        * Variables for role "nso" is defined in file `/home/dvans/ansibleproject/group_vars/nso`.   
          
          Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
