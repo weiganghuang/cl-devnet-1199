@@ -118,7 +118,7 @@ Lab access steps:
    * `nso_install.yml` This yml file defines play to install NSO and set nso environment.  
      Sample file: [nso_install.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install.yml)
     
-   * `nso_install_packages.yml`, this yml file is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use block and looping.  
+   * `nso_install_packages.yml`, this yml file is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use blockinfile module.  
       
      Sample file: [nso\_install\_packages.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install_packages.yml)
     
@@ -182,7 +182,7 @@ Lab access steps:
       Sample output:  
       
       ```
-      [dvans@cl90 ~]$ cd ansibleproject/roles/nso/files
+      [dvans@cl90 ~]$ cd ~/ansibleproject/roles/nso/files
       [dvans@cl90 files]$ cp ~/nso-4.5.0.1.linux.x86_64.installer.bin .
       [dvans@cl90 files]$ cp ~/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
       [dvans@cl90 files]$ cp ~/dns-manager.tar.gz .
@@ -190,13 +190,13 @@ Lab access steps:
       [dvans@cl90 files]$ cp -r ~/scripts/ .
       ```
         
-    * Copy syndns package to `device/files`. From your ansible controller, copy the required file from `/home/dvans/` to `/home/dvans/ansibleproject/roles/device/files/`.   
+    * Copy syncdns package to `device/files`. From your ansible controller, copy the required file from `/home/dvans/` to `/home/dvans/ansibleproject/roles/device/files/`.   
   
       Sample output: 
      
       ```shell
-      [dvans@cl90 ~]$ cd ansibleproject/roles/device/files
-      [dvans@cl90 files]$ cp ~/syndns.tar.gz .
+      [dvans@cl90 ~]$ cd ~/ansibleproject/roles/device/files
+      [dvans@cl90 files]$ cp ~/syncdns.tar.gz .
       ```
 8. Create variables.
      * Create group variables. As shown at the previous steps, the play books have used several variables. Role based variables are defined at `group_vars` directory.
@@ -204,9 +204,9 @@ Lab access steps:
          
          Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
          
-       * We also defined a variable to be used for install syncdns package. It is defined at `/home/dvans/ansibleproject/vars`. The sample file below shows the variable for lab user 16. Make sure you enter the value with your user name, such as user1, user2, and etc.  
-       
-         Sample file: [vars](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
+       * We also defined a variable to be used for install syncdns package. It is pre-defined at `/home/dvans/ansibleproject/vars/labuser`. The sample file below shows the variable for lab user 17.
+              
+         Sample file: [labuser](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
          
 9. Put everything together  
    We have defined all play books for each role. Now we are ready to put everything together in `/home/dvans/ansibleproject/cl-playbook.yml`. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in `cl-playbook.yml`.  
