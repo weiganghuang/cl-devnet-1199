@@ -103,7 +103,8 @@ Lab access steps:
     
     
   
-4. Create tasks for role "nso". List of tasks:
+4. Create the following tasks for role "nso". 
+
    * Copy images to NSO host.
    * Install NSO.
    * Install packages (ned, service package, and inventory packages)
