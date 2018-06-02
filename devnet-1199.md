@@ -58,7 +58,7 @@ Lab access steps:
 * RDP to Jump start server
 * putty to your assigned ansible host. (H)
 
-[Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=794506e345394e7daa069aeb2c931a1c)  
+[Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)  
 
 ### Create Ansible playbook diretories
 
@@ -99,7 +99,7 @@ Lab access steps:
      
     Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
     
-    Check the pre-populated hosts file, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=794506e345394e7daa069aeb2c931a1c) 
+    Check the pre-populated hosts file, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391) 
     
     
   
