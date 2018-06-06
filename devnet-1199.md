@@ -102,14 +102,16 @@ Lab access steps:
     Check the pre-populated hosts file, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391) 
     
 4. Create variables.
-     * Create group variables. Those variables are used in tasks and templates in later steps.  Role based variables are defined at `group_vars` directory.
-       * Variables for role "nso" is defined in `/home/dvans/ansibleproject/group_vars/nso`.   
+
+   Create group variables. Those variables are used in tasks and templates in later steps.  Role based variables are defined at `group_vars` directory.
+   
+   * Variables for role "nso" is defined in `/home/dvans/ansibleproject/group_vars/nso`.   
          
-         Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
+     Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
          
-       * We also defined a variable to be used for install syncdns package. It is pre-defined at `/home/dvans/ansibleproject/vars/labuser`. The sample file below shows the variable for lab user 17.
+   * We also defined a variable to be used for install syncdns package. It is pre-defined at `/home/dvans/ansibleproject/vars/labuser`. The sample file below shows the variable for lab user 17.
               
-         Sample file: [labuser](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
+     Sample file: [labuser](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
          
    
   
