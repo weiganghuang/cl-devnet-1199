@@ -107,7 +107,7 @@ Lab access steps:
 
    * Copy images to NSO host.
    * Install NSO.
-   * Install packages (ned, service package, and inventory packages)
+   * Install packages (ned, service package, and inventory package)
    * Start NSO.
    * Load devices
    * Post check.
