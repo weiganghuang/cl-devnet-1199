@@ -58,11 +58,12 @@ Lab access steps:
 * RDP to Jump start server
 * putty to your assigned ansible host. (H)
 
-[Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)  
+[Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391) 
+ 
 
-### Create Ansible playbook diretories
+### Create and Test Ansible Playbooks 
 
-1. A set of directories and files are pre-defined on each ansible controller vm. 
+1. Inspect pre-defined directories for the lab. Log on to your ansible controller vm (A). 
 
    * check home directory, expect to see ansibleproject, hosts, and roles are created. 
    
