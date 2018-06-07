@@ -86,8 +86,9 @@ Lab access steps:
      group_vars hosts  roles  vars
      ```
    
-1. Create roles using ansible-galaxy. `ansible-galaxy init` creates directories roles skeleton directories.  
-   * Sample output:    
+1. Create roles using ansible-galaxy. `ansible-galaxy init` creates directories roles skeleton directories.
+  
+   Sample output:    
 
      ```
      [dvans@cl90 ~]$ cd ansibleproject/roles
