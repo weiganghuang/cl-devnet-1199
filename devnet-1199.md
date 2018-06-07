@@ -112,34 +112,7 @@ Lab access steps:
    * We also defined a variable to be used for install syncdns package. It is pre-defined at `/home/dvans/ansibleproject/vars/labuser`. The sample file below shows the variable for lab user 17.
               
      Sample file: [labuser](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
-         
-7. Prepare image/helper scripts files for roles "nso" and "device". The required images and helper scripts files are created under `files` directory for each role. In this workshop, we only need to put files to roles "nso" and "device". 
-
-    The required files are made available at `/home/dvans` for your ansible host, H.
-
-    * Copy nso binary, ned, service package, inventory package, and scripts to nso/files. From your ansible controller, copy required files from `/home/dvans/` to `/home/dvans/ansibleproject/roles/nso/files`.  
-      
-      Sample output:  
-      
-      ```
-      [dvans@cl90 ~]$ cd ~/ansibleproject/roles/nso/files
-      [dvans@cl90 files]$ cp ~/nso-4.5.0.1.linux.x86_64.installer.bin .
-      [dvans@cl90 files]$ cp ~/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
-      [dvans@cl90 files]$ cp ~/dns-manager.tar.gz .
-      [dvans@cl90 files]$ cp ~/inventory.tar.gz .
-      [dvans@cl90 files]$ cp -r ~/scripts .
-      ```
-        
-    * Copy syncdns package to `device/files`. From your ansible controller, copy the required file from `/home/dvans/` to `/home/dvans/ansibleproject/roles/device/files/`.   
-  
-      Sample output: 
-     
-      ```
-      [dvans@cl90 ~]$ cd ~/ansibleproject/roles/device/files
-      [dvans@cl90 files]$ cp ~/syncdns.tar.gz .
-      ```
-   
-  
+           
 4. Create the following tasks for role "nso". 
 
    * Copy images to NSO host.
@@ -215,7 +188,34 @@ Lab access steps:
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
-7.9. Put everything together  
+7. Prepare image/helper scripts files for roles "nso" and "device". The required images and helper scripts files are created under `files` directory for each role. In this workshop, we only need to put files to roles "nso" and "device". 
+
+    The required files are made available at `/home/dvans` for your ansible host, H.
+
+    * Copy nso binary, ned, service package, inventory package, and scripts to nso/files. From your ansible controller, copy required files from `/home/dvans/` to `/home/dvans/ansibleproject/roles/nso/files`.  
+      
+      Sample output:  
+      
+      ```
+      [dvans@cl90 ~]$ cd ~/ansibleproject/roles/nso/files
+      [dvans@cl90 files]$ cp ~/nso-4.5.0.1.linux.x86_64.installer.bin .
+      [dvans@cl90 files]$ cp ~/ncs-4.5.0.1-unix-bind-2.0.0.tar.gz .
+      [dvans@cl90 files]$ cp ~/dns-manager.tar.gz .
+      [dvans@cl90 files]$ cp ~/inventory.tar.gz .
+      [dvans@cl90 files]$ cp -r ~/scripts .
+      ```
+        
+    * Copy syncdns package to `device/files`. From your ansible controller, copy the required file from `/home/dvans/` to `/home/dvans/ansibleproject/roles/device/files/`.   
+  
+      Sample output: 
+     
+      ```
+      [dvans@cl90 ~]$ cd ~/ansibleproject/roles/device/files
+      [dvans@cl90 files]$ cp ~/syncdns.tar.gz .
+      ```
+   
+
+9. Put everything together  
    We have defined all play books for each role. Now we are ready to put everything together in `/home/dvans/ansibleproject/cl-playbook.yml`. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in `cl-playbook.yml`.  
      
    Sample file: [cl-playbook.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/cl-playbook.yml)
