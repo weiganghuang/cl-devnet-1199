@@ -67,7 +67,7 @@ Lab access steps:
 
    Log on to your ansible controller vm (A), refer [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391) for VM assignment and credentials. 
 
-   * Check home directory, expect to see `ansibleproject`, image and package files, and helper scripts are pre-loaded for you. 
+   * Check home directory, expect to see ansibleproject, image and package files, and helper scripts are pre-loaded for you. 
    
      Sample output:
 
