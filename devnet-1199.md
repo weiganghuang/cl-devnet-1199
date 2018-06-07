@@ -63,7 +63,7 @@ Lab access steps:
 
 ### Create and Test Ansible Playbooks 
 
-1. Inspect pre-defined directories for the lab. Log on to your ansible controller vm (A). 
+1. Inspect pre-defined directories for the lab. Log on to your ansible controller vm (A), refer [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391) for VM assignment and credentials. 
 
    * check home directory, expect to see ansibleproject, hosts, and roles are created. 
    
