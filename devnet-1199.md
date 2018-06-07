@@ -142,7 +142,7 @@ Lab access steps:
    * `nso_install.yml` This yml file defines play to install NSO and set nso environment.  
      Sample file: [nso_install.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install.yml)
     
-   * `nso_install_packages.yml`, this yml file is to install unix-bind ned and  dns manager service package, and inventory package. In this play book, we use block and looping.   
+   * `nso_install_packages.yml`, this yml file is to install unix-bind ned, dns manager service package, and inventory package. In this play book, we use block and looping.   
       
      Sample file: [nso\_install\_packages.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_install_packages.yml)
     
