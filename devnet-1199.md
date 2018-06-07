@@ -104,13 +104,11 @@ Lab access steps:
      device  nso  se  target
      ```
   
-3.  View inventory file `/home/dvans/home/ansibleproject/hosts`.  
+3.  Inspect pre-populated inventory file `/home/dvans/home/ansibleproject/hosts`.  
 
-    The contents of hosts file should contain the ip address of N, M, T1, and T2.  
+    `hosts` contains the ip address of N, M, T1, and T2, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)
      
     Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
-    
-    Check the pre-populated hosts file, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391) 
     
 4. Create variables.
 
