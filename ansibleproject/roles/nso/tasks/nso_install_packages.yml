@@ -4,24 +4,24 @@
 - name: clean packages directory
   block:
     - file:
-        path: "{{ nso_run_dir}}/packages"
+        path: "{{ nso_run_dir }}/packages"
         state: absent
 
     - file:
-        path: "{{ nso_run_dir}}/packages"
+        path: "{{ nso_run_dir }}/packages"
         state: directory
 
 - name: link unix bind ned
   file:
-    path: "{{ nso_run_dir}}/packages/{{ ned_file }}"
+    path: "{{ nso_run_dir }}/packages/{{ ned_file }}"
     src: "{{ nso_image_path }}/{{ ned_file }}"
     state: "link"
     mode: "0444"
 
 - name: install service model packages
   unarchive: 
-    src: "{{ item }}"
-    dest: "{{ nso_run_dir}}/packages/"
+    src: "{{ nso_src_dir }}/{{ item }}"
+    dest: "{{ nso_run_dir }}/packages/"
   with_items:
     - "{{ dns_manager_pkg }}"
     - "{{ inventory_pkg }}"

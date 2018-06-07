@@ -2,6 +2,7 @@
 # roles/se/tasks/main.yml
 
 - name: fetch public key files
+  tags: se
   fetch:
     dest: '/var/tmp/{{item}}'
     src: '/home/{{item}}/.ssh/id_rsa.pub'

@@ -2,6 +2,7 @@
 # roles/target/tasks/main.yml
 
 - name: add pub key of master to authorized_keys of targets
+  tags: target_add_pub_key
   vars:
     - hostname: "{{ groups['master'][0] }}"
   authorized_key: 
@@ -12,18 +13,21 @@
     - cl94644
 
 - name: find backup sudoers file
+  tags: target_find_backup_sudoers
   find:
     paths: /etc
     patterns: "sudoers.*~"
   register: files_to_delete
 
 - name: clean backup soduers
+  tags: target_clean_backup_sudoers
   file:
     path: "{{ item.path }}"
     state: absent
   with_items: "{{ files_to_delete.files }}"
 
 - name: update sudoers to allow cl94644 sudo to dns for a set of commands
+  tags: target_update_sudoers
   blockinfile:
     path: /etc/sudoers
     backup: yes

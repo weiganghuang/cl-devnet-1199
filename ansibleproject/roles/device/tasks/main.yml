@@ -5,16 +5,19 @@
     file: vars/labuser
 
 - name: create script dir
+  tags: device_create_script_dir
   file:
     path: "/tmp/{{labuser}}"
     state: directory
 
-- name: unchive sync script  
+- name: unarchive sync script
+  tags: device_unarchive_sync_script  
   unarchive:
-    src: syncdns.tar.gz
+    src: "/home/dvans/syncdns.tar.gz"
     dest: "/tmp/{{labuser}}"
 
 - name: add pub key to authorized
+  tags: device_add_pub_keys
   become: yes
   become_user: root
   vars:
@@ -28,6 +31,7 @@
     - cl94644
 
 - name: update sudoers to allow cl00254 sudo to cl94644, invoke syncdns script
+  tags: device_update_sudoers
   become: yes
   become_user: root
   lineinfile:

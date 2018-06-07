@@ -3,14 +3,14 @@
 
 - name: copy nso image
   copy:
-    src: "{{ nso_binary }}"
+    src: "{{ nso_src_dir }}/{{ nso_binary }}"
     dest: "{{ nso_image_path }}"
 - name: copy ned
   copy:
-    src: "{{ ned_file }}"
+    src: "{{ nso_src_dir }}/{{ ned_file }}"
     dest: "{{ nso_image_path }}"
 
 - name: copy nso helper scripts
   synchronize:
-    src: "{{ helper_script_dir}}"
+    src: "{{ nso_src_dir }}/{{ helper_script_dir}}"
     dest: "{{ansible_env.HOME}}/scripts"

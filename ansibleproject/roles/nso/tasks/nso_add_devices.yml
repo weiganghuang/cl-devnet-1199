@@ -20,10 +20,10 @@
     - inventory
 
 - name: load merge device and invetory files
-  shell: "source {{ nso_install_path}}/ncsrc;{{ nso_install_path }}/bin/ncs  --mergexmlfiles {{ansible_env.HOME}}/{{item}}.xml --cd {{ansible_env.HOME}}/ncs-run"
+  shell: "source {{ nso_install_path }}/ncsrc;{{ nso_install_path }}/bin/ncs  --mergexmlfiles {{ansible_env.HOME}}/{{item}}.xml --cd {{ansible_env.HOME}}/ncs-run"
   with_items:
     - device
     - inventory
 
 - name: nso sync device master
-  shell: "source {{ nso_install_path}}/ncsrc; sh {{ansible_env.HOME}}/scripts/sync-device.sh master"
+  shell: "source {{ nso_install_path }}/ncsrc; sh {{ansible_env.HOME}}/scripts/sync-device.sh master"

@@ -1,15 +1,17 @@
 nso_image_path: /home/dvnso
 nso_install_path: /home/dvnso/nso-4.5.0.1
+nso_run_dir: /home/dvnso/ncs-run
+nso_src_dir: /home/dvans
 nso_binary: nso-4.5.0.1.linux.x86_64.installer.bin
 ned_file: ncs-4.5.0.1-unix-bind-2.0.0.tar.gz
-nso_run_dir: /home/dvnso/ncs-run
+helper_script_dir: scripts/
 dns_manager_pkg: dns-manager.tar.gz
 inventory_pkg: inventory.tar.gz
 master_ip: "{{groups['master'][0]}}"
 master_key: /home/dvnso/.ssh/id_rsa
-nso_remote_user: cl00254
 target1_ip: "{{groups['target1'][0]}}"
 target2_ip: "{{groups['target2'][0]}}"
-helper_script_dir: scripts/
+nso_remote_user: cl00254
+
 
 
