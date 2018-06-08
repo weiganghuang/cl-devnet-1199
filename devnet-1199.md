@@ -95,12 +95,12 @@ Lab access steps:
      [dvans@cl90 ~]$ cd ansibleproject/roles
      [dvans@cl90 roles]$ ansible-galaxy init se
      - se was created successfully
-     [dvans@cl90 roles]$ ansible-galaxy init nso
-     - nso was created successfully
      [dvans@cl90 roles]$ ansible-galaxy init device  
      - device was created successfully  
      [dvans@cl90 roles]$ ansible-galaxy init target  
-     - target was created successfully  
+     - target was created successfully 
+     [dvans@cl90 roles]$ ansible-galaxy init nso
+     - nso was created successfully 
      [dvans@cl90 roles]$ ls  
      device  nso  se  target
      ```
