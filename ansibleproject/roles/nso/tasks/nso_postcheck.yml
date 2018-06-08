@@ -1,5 +1,5 @@
 ---
-#rules/nso/tasks/nso_add_devices.yml
+#rules/nso/tasks/nso_postcheck.yml
 
 - include_vars:
     file: vars/labuser
