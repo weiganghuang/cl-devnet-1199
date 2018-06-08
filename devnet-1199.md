@@ -27,8 +27,8 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
 
 * Use Cisco NSO manage DNS servers, invoke an action of synchronization from master to targets.
 * Install Cisco NSO and service packages, device inventory on host N. NSO host manages DNS hosts, M, T1, and T2.
-* Security compliance, the communication between NSO to hosts it manages (M, T1 and T2) is limited to no-login, key based ssh.
-* Security compliance, the transport among DNS hosts is limited to non-interactive, no-login, key based. 
+* Security compliance -1 , the communication between NSO to hosts it manages (M, T1 and T2) is limited to no-login, key based ssh.
+* Security compliance -2, the transport among DNS hosts is limited to non-interactive, no-login, key based. 
 * Users:
   * dvans: owns and runs ansible play books
   * dvnso: owns and runs NSO
@@ -37,7 +37,7 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
 
 ### Ansible Playbook Design
 
-* Inventory (hosts) with three groups:
+* Ansible inventory (hosts) with three groups:
   * nso
   * master
   * targets
@@ -105,23 +105,17 @@ Lab access steps:
      device  nso  se  target
      ```
   
-3.  Inspect pre-populated inventory file `/home/dvans/home/ansibleproject/hosts`.  
+3.  Inspect pre-populated ansible inventory file `/home/dvans/home/ansibleproject/hosts`.  
 
     `hosts` contains the group ip address for hosts ( N, M, T1, and T2). Make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)
      
     Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
     
-4. Create variables.
-
-   Create inventory group variables. Those variables are used in tasks and templates in later steps. They are defined at `group_vars` directory, with file name same as the group name.
-   
-   * Variables for inventory group "nso" is defined in `/home/dvans/ansibleproject/group_vars/nso`.   
-         
-     Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
-         
-   * We also defined a variable to be used for install syncdns package. It is pre-defined at `/home/dvans/ansibleproject/vars/labuser`. The sample file below shows the variable for lab user 17.
-              
-     Sample file: [labuser](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
+5. Create playbook to invoke role based tasks.
+ 
+   `/home/dvans/ansibleproject/cl-playbook.yml` is the playbook calls out all the roles we created in previous step; the associated main.yml play book for each role are executed in the order defined in `cl-playbook.yml`.  
+     
+   Sample file: [cl-playbook.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/cl-playbook.yml)
            
 4. Create the following tasks for role "nso". 
 
@@ -198,11 +192,18 @@ Lab access steps:
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
 
+3. Create variables.
 
-9. Put everything together  
-   We have defined all play books for each role. Now we are ready to put everything together in `/home/dvans/ansibleproject/cl-playbook.yml`. This play book calls out all roles; the associated main.yml play book for each role are executed in the order defined in `cl-playbook.yml`.  
-     
-   Sample file: [cl-playbook.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/cl-playbook.yml)
+   Create inventory group variables. Those variables are used in tasks and templates in later steps. They are defined at `group_vars` directory, with file name same as the group name.
+   
+   * Variables for inventory group "nso" is defined in `/home/dvans/ansibleproject/group_vars/nso`.   
+         
+     Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
+         
+   * We also defined a variable to be used for install syncdns package. It is pre-defined at `/home/dvans/ansibleproject/vars/labuser`. The sample file below shows the variable for lab user 17.
+              
+     Sample file: [labuser](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/vars/labuser)
+
    
 10. Testing  
     Now we are ready to test the top level play book cl-playbook.yml. To execute, we invoke ansible-playbook command `ansible-playbook -i hosts cl-playbook.yml`   
