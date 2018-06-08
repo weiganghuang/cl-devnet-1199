@@ -106,15 +106,15 @@ Lab access steps:
   
 3.  Inspect pre-populated inventory file `/home/dvans/home/ansibleproject/hosts`.  
 
-    `hosts` contains the ip address of N, M, T1, and T2, make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)
+    `hosts` contains the group ip address for hosts ( N, M, T1, and T2). Make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)
      
     Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
     
 4. Create variables.
 
-   Create group variables. Those variables are used in tasks and templates in later steps.  Role based variables are defined at `group_vars` directory.
+   Create inventory group variables. Those variables are used in tasks and templates in later steps. They are defined at `group_vars` directory, with file name same as the group name.
    
-   * Variables for role "nso" is defined in `/home/dvans/ansibleproject/group_vars/nso`.   
+   * Variables for inventory group "nso" is defined in `/home/dvans/ansibleproject/group_vars/nso`.   
          
      Sample file: [nso](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/group_vars/nso)
          
