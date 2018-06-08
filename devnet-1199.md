@@ -209,6 +209,12 @@ Lab access steps:
      
     Sample output: [sample_output](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/sample_output/output)
     
+### References
+
+1. [Asnible Best Practice](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html)
+2. [Cisco Network Services Orchestrator Capabilities](https://www.cisco.com/c/en/us/solutions/service-provider/solutions-cloud-providers/network-services-orchestrator-solutions.html)
+3. [Cisco Network Services Orchestrtor](https://www.cisco.com/c/en/us/support/cloud-systems-management/network-services-orchestrator/tsd-products-support-series-home.html)
+    
     
     
     
