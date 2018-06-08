@@ -45,12 +45,12 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
 * Roles:
   * se
      * tasks: pre-fetch ssh public key files
-  * nso
-     * tasks: NSO install and testing
   * device
-     * tasks: sync script install, authorized keys
+     * tasks: sync script install, update authorized keys to allow cl00254. Update sudoers.
   * target
-     * tasks: set authorized keys
+     * tasks: update authorized keys to allow cl00254 and cl94644. Update sudoers.
+  * nso
+     * tasks: NSO and packages installation and testing
 
 ### Lab Access
 
