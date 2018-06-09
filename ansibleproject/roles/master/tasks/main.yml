@@ -1,0 +1,59 @@
+---
+# roles/device/tasks/main.yml
+
+- include_vars: 
+    file: vars/labuser
+
+- name: create script dir
+  tags: master_create_script_dir
+  file:
+    path: "/tmp/{{labuser}}"
+    state: directory
+
+- name: unarchive sync script
+  tags: master_unarchive_sync_script  
+  unarchive:
+    src: "/home/dvans/syncdns.tar.gz"
+    dest: "/tmp/{{labuser}}"
+
+- name: add pub key to authorized
+  tags: master_add_pub_keys
+  become: yes
+  become_user: root
+  vars:
+    - hostname: "{{ groups['nso'][0] }}"
+  authorized_key: 
+    user: "{{item}}"
+    state: present
+    key: "{{ lookup('file', '/var/tmp/dvnso/{{hostname}}/home/dvnso/.ssh/id_rsa.pub') }}"
+  with_items:
+    - cl00254
+    - cl94644
+
+- name: find backup sudoers file
+  tags: target_find_backup_sudoers
+  become: yes
+  become_user: root
+  find:
+    paths: /etc
+    patterns: "sudoers.*~"
+  register: files_to_delete
+
+- name: clean backup soduers
+  tags: target_clean_backup_sudoers
+  become: yes
+  become_user: root
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ files_to_delete.files }}"
+
+- name: update sudoers to allow cl00254 sudo to cl94644, invoke syncdns script
+  tags: master_update_sudoers
+  become: yes
+  become_user: root
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    backup: yes
+    line: 'cl00254 ALL=(cl94644) NOPASSWD: /usr/bin/python *syncdns.py*'

@@ -8,7 +8,7 @@
   become_user: cl94644
   become: true
   roles:
-    - role: device
+    - role: master
 
 - hosts: "target1,target2"
   become_user: root
