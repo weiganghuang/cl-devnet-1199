@@ -93,7 +93,7 @@ Lab access steps:
      
     Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
       
-1. Create roles using ansible-galaxy. `ansible-galaxy init` creates directories roles skeleton directories.
+3. Create roles using ansible-galaxy. `ansible-galaxy init` creates directories roles skeleton directories.
   
    Sample output:    
 
