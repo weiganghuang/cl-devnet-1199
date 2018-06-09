@@ -121,7 +121,20 @@ Lab access steps:
 5. Create tasks for role "se". We add this role to ease the key exchange for nso host N, dns master M and dns targets T1/T2. The task of this role is to pre fetch public rsa key files from M, T1 and T2 to ansible controller A. The fetched publick key files are then distributed to proper user's authorized keys files. We define the task in `/home/dvans/ansibleproject/roles/se/tasks/main.yml`.  
     
     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/se/tasks/main.yml)
-           
+    
+6. Create tasks for role "device". As mentioned in the requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. One of the tasks is to add rsa public key of N to M. In addition , we define a task to limit sudoers to perform only the allowed operations.  
+  
+    The DNS synchronization from master to targets is performed by python application tool syncdns from DNS master. Thus,we also need to define a task to install syncdns package onto dns master M.  
+     
+    For this play, we define tasks in `/home/dvans/ansibleproject/roles/device/tasks/main.yml`.  
+
+   Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/device/tasks/main.yml)
+
+7. Create tasks for role "target". DNS master synchronize end user selected directory to targets. To comply with the company's security requirements, the communication between master (M) to targets (T1,T2) is no-login, non-interaction, key based ssh. The tasks defined for this role is to add rsa public key to T1 and T2 for peer user, and limit sudoers to perform only the allowed operations. Similar to that for "device", we define tasks in `/home/dvans/ansibleproject/roles/target/tasks/main.yml`. 
+  
+   Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
+   
+          
 4. Create the following tasks for role "nso". 
 
    * Copy images to NSO host.
@@ -180,20 +193,7 @@ Lab access steps:
 
       Sample file: [inventory.j2](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/templates/inventory.j2) 
        
-5. Create tasks for role "device". As mentioned in the requirements, dns master M is managed by NSO. To meet the security compliance, the communication between NSO host N and the device M is limited to non-login, non-interactive, key based ssh. One of the tasks is to add rsa public key of N to M. In addition , we define a task to limit sudoers to perform only the allowed operations.  
-  
-    The DNS synchronization from master to targets is performed by python application tool syncdns from DNS master. Thus,we also need to define a task to install syncdns package onto dns master M.  
-     
-    For this play, we define tasks in `/home/dvans/ansibleproject/roles/device/tasks/main.yml`.  
-
-   Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/device/tasks/main.yml)
    
-   
-6. Create tasks for role "target". DNS master synchronize end user selected directory to targets. To comply with the company's security requirements, the communication between master (M) to targets (T1,T2) is no-login, non-interaction, key based ssh. The tasks defined for this role is to add rsa public key to T1 and T2 for peer user, and limit sudoers to perform only the allowed operations. Similar to that for "device", we define tasks in `/home/dvans/ansibleproject/roles/target/tasks/main.yml`. 
-  
-   Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/target/tasks/main.yml)
-   
-
 3. Create variables.
 
    Create inventory group variables. Those variables are used in tasks and templates in later steps. They are defined at `group_vars` directory, with file name same as the group name.
