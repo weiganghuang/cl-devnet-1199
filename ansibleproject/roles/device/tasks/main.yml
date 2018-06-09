@@ -30,6 +30,24 @@
     - cl00254
     - cl94644
 
+- name: find backup sudoers file
+  tags: target_find_backup_sudoers
+  become: yes
+  become_user: root
+  find:
+    paths: /etc
+    patterns: "sudoers.*~"
+  register: files_to_delete
+
+- name: clean backup soduers
+  tags: target_clean_backup_sudoers
+  become: yes
+  become_user: root
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ files_to_delete.files }}"
+
 - name: update sudoers to allow cl00254 sudo to cl94644, invoke syncdns script
   tags: device_update_sudoers
   become: yes
@@ -37,4 +55,5 @@
   lineinfile:
     path: /etc/sudoers
     state: present
+    backup: yes
     line: 'cl00254 ALL=(cl94644) NOPASSWD: /usr/bin/python *syncdns.py*'

@@ -4,8 +4,8 @@
 - name: fetch public key files
   tags: se
   fetch:
-    dest: '/var/tmp/{{item}}'
     src: '/home/{{item}}/.ssh/id_rsa.pub'
+    dest: '/var/tmp/{{item}}'
   with_items:
      - cl00254
      - cl94644
