@@ -142,11 +142,15 @@ Lab access steps:
    * Install packages (ned, service package, and inventory package)
    * Start NSO.
    * Load devices
-   * Post check.
-   
-   All the above nso tasks are implemented with seperate playbook yml files. 
+   * Post check. 
    
    **Note, the nso task yml files should be at directory `/home/dvans/ansibleproject/roles/nso/tasks/`.**   
+   
+   All the above nso tasks are implemented with seperate yml files. They are included to main task yml file `main.yml`. 
+   
+   * `main.yml`, include all the task yml files.  
+    
+     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
    
    * `nso_copy_images.yml` This yml file uses ansible copy and synchroize modules. Varialbes such as nso\_binary, nso\_image\_path, and etc, are defined under `group_vars/nso`, in previous step.
       
@@ -174,9 +178,7 @@ Lab access steps:
 
      Sample file: [nso_postcheck.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/nso_postcheck.yml)
      
-   * The above 7 tasks are putting together and invoked from playbook `main.yml`.    
-    
-     Sample file: [main.yml](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/roles/nso/tasks/main.yml)
+   
 
 5. Create template files for role "nso"
    
