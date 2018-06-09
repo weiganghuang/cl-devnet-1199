@@ -86,7 +86,13 @@ Lab access steps:
      [dvans@cl-lab-212 ~]$ ls ansibleproject/
      group_vars hosts  roles  vars
      ```
-   
+ 
+2.  Inspect pre-populated ansible inventory file `/home/dvans/home/ansibleproject/hosts`.  
+
+    `hosts` contains the group ip address for hosts ( N, M, T1, and T2). Make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)
+     
+    Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
+      
 1. Create roles using ansible-galaxy. `ansible-galaxy init` creates directories roles skeleton directories.
   
    Sample output:    
@@ -104,12 +110,7 @@ Lab access steps:
      [dvans@cl90 roles]$ ls  
      device  nso  se  target
      ```
-  
-3.  Inspect pre-populated ansible inventory file `/home/dvans/home/ansibleproject/hosts`.  
 
-    `hosts` contains the group ip address for hosts ( N, M, T1, and T2). Make sure the ip address of NSO matches to [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391)
-     
-    Sample contents of hosts: [hosts](https://github.com/weiganghuang/cl-devnet-1199/blob/master/ansibleproject/hosts).
     
 5. Create playbook to invoke role based tasks.
  
