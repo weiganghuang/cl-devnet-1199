@@ -15,21 +15,18 @@
   include: "nso_install_packages.yml"
   tags: nso_install_package
 
-# start nso
-# reload package
+# start nso with package reload
 - name: start nso application
   include: "nso_start.yml"
   tags: nso_start.yml
 
-# load device inventory
-# sync device
-# 
+# load device inventory, devices and sync master
 - name: add devices
   include: "nso_add_devices.yml"
   tags: nso_add_devices
 
 # postcheck nso
-- name: post chek nso
+- name: post check
   include: "nso_postcheck.yml"
   tags: nso_postcheck
 
