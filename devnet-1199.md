@@ -5,6 +5,7 @@
 
 ## Use case
 ![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/usercase.png)
+
 ## Lab setup  
 ![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/setup.png)  
 
@@ -40,6 +41,7 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
 
 ### Ansible Playbook Design
 
+![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/tree.png)
 * Ansible inventory (hosts) with three groups:
   * nso
   * master
