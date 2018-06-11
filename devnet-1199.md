@@ -43,7 +43,6 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
 
 ### Ansible Playbook Design
 
-![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/tree.png)
 * Ansible inventory (hosts) with three groups:
   * nso
   * master
@@ -58,10 +57,12 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
      * tasks: update authorized keys to allow cl00254 and cl94644. Update sudoers.
   * nso
      * tasks: NSO and packages installation and testing
+     
+![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/tree.png)
 
-### Lab Access
+### Access your setup
 
-Lab access steps:  
+Steps:  
 
 * RDP to Jump start server
 * putty to your assigned ansible host (A)
