@@ -6,6 +6,19 @@
 ## Use case
 ![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/usercase.png)
 
+### Requirements
+
+* Use case: Cisco NSO to manage DNS servers and invoke an action of synchronization from DNS master to DNS targets.
+* Application deployment: Install Cisco NSO and service packages, device inventory on host N. NSO host manages DNS hosts, M, T1, and T2.
+* Security compliance -1 , the communication between NSO to hosts it manages (M, T1 and T2) is limited to no-login, key based ssh.
+* Security compliance -2, the transport among DNS hosts is limited to non-interactive, no-login, key based. 
+* Users:
+  * dvans: owns and runs ansible play books
+  * dvnso: owns and runs NSO
+  * cl00254: device (DNS servers) 
+  * cl94644: performs synchronization from master to targets
+
+
 ## Lab setup  
 ![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/setup.png)  
 
@@ -27,17 +40,6 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
 * DNS targets T1 and T2:
   * DNS targets in the network
 
-### Requirements
-
-* Use Cisco NSO manage DNS servers, invoke an action of synchronization from master to targets.
-* Install Cisco NSO and service packages, device inventory on host N. NSO host manages DNS hosts, M, T1, and T2.
-* Security compliance -1 , the communication between NSO to hosts it manages (M, T1 and T2) is limited to no-login, key based ssh.
-* Security compliance -2, the transport among DNS hosts is limited to non-interactive, no-login, key based. 
-* Users:
-  * dvans: owns and runs ansible play books
-  * dvnso: owns and runs NSO
-  * cl00254: device (DNS servers) 
-  * cl94644: performs synchronization from master to targets
 
 ### Ansible Playbook Design
 
@@ -62,7 +64,7 @@ The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master 
 Lab access steps:  
 
 * RDP to Jump start server
-* putty to your assigned ansible host. (H)
+* putty to your assigned ansible host (A)
 
 [Jump start server and VM Assignment](https://app.smartsheet.com/b/publish?EQBCT=b4f97553bce344ffa076165fd5f03391) 
  
