@@ -3,7 +3,7 @@
 
 ****
 
-## Use case
+### Use case
 ![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/usercase.png)
 
 ### Requirements
@@ -19,7 +19,7 @@
   * cl94644: performs synchronization from master to targets
 
 
-## Lab setup  
+### Lab setup  
 ![](https://github.com/weiganghuang/cl-devnet-1199/blob/master/image/setup.png)  
 
 The set up is composed of five VM's: Ansible controller (A), NSO(N), DNS master server (M), and two DNS targets (T1 and T2).  
