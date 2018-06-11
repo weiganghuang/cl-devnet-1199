@@ -1,5 +1,5 @@
 ---
-#roles/nso/tasks/nso_install_packages.yml
+#file: roles/nso/tasks/nso_install_packages.yml
 
 - name: clean packages directory
   block:

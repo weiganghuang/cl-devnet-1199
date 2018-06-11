@@ -1,5 +1,5 @@
 ---
-#rules/nso/tasks/nso_postcheck.yml
+#file: roles/nso/tasks/nso_postcheck.yml
 
 - include_vars:
     file: vars/labuser

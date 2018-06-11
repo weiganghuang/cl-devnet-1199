@@ -1,5 +1,5 @@
 ---
-# roles/target/tasks/main.yml
+#file: roles/target/tasks/main.yml
 
 - name: add pub key of master to authorized_keys of targets
   tags: target_add_pub_key

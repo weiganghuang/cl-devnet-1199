@@ -1,5 +1,5 @@
 ---
-#roles/nso/task/nso_copy_images.yml
+#file roles/nso/task/nso_copy_images.yml
 
 - name: copy nso image
   copy:

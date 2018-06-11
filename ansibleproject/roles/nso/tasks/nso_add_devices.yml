@@ -1,5 +1,5 @@
 ---
-#rules/nso/tasks/nso_add_devices.yml
+#file: rules/nso/tasks/nso_add_devices.yml
 
 - name: fetch master hostkey
   shell: ssh-keyscan -4 -T 5 -t rsa {{groups['master'][0]}}   2>/dev/null | awk '{ print $3; }' > /tmp/key.txt

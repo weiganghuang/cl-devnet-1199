@@ -1,4 +1,5 @@
 ---
+#file: cl-playbook.yml
 - hosts: "nso,master,target1,target2"
   become: true
   roles:

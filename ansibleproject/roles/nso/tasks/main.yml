@@ -1,5 +1,5 @@
 ---
-# roles/nso/tasks/main.xml
+#file: roles/nso/tasks/main.xml
 
 - name: copy nso images, sm package, and device inventory
   include_tasks: "nso_copy_images.yml"
