@@ -1,0 +1,26 @@
+---
+- hosts: "nso,master,target1,target2"
+  become: true
+  roles:
+    - role: se
+
+- hosts: master
+  become_user: cl94644
+  become: true
+  roles:
+    - role: master
+
+- hosts: "target1,target2"
+  become_user: root
+  become: true
+  roles:
+    - role: target
+
+- hosts: nso
+  become_user: dvnso
+  become: true
+  roles:
+  - role: nso
+
+
+
